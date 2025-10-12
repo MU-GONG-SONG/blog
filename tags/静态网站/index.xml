@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>静态网站 on Q-song | 技术.生活.阅读.思考</title>
+    <link>http://mu-gong-song.github.io/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</link>
+    <description>Recent content in 静态网站 on Q-song | 技术.生活.阅读.思考</description>
+    <generator>Hugo</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 12 Oct 2025 16:00:00 +0800</lastBuildDate>
+    <atom:link href="http://mu-gong-song.github.io/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>初识 Hugo：打造你的静态博客</title>
+      <link>http://mu-gong-song.github.io/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sun, 12 Oct 2025 15:30:00 +0800</pubDate>
+      <guid>http://mu-gong-song.github.io/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;h2 id=&#34;-什么是-hugo&#34;&gt;🚀 什么是 Hugo？&lt;/h2&gt;&#xA;&lt;p&gt;Hugo 是一个基于 Go 语言编写的 &lt;strong&gt;静态网站生成器&lt;/strong&gt;。&lt;br&gt;&#xA;它的最大特点是——&lt;strong&gt;速度极快、部署方便、几乎零依赖&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;使用 Hugo，你可以用 Markdown 写文章，然后自动生成一个完整的博客网站。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-安装-hugo&#34;&gt;🛠️ 安装 Hugo&lt;/h2&gt;&#xA;&lt;p&gt;在 macOS 上：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hugo&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>
