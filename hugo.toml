@@ -1,4 +1,6 @@
-baseURL = "http://mu-gong-song.github.io/"
+# hugo.toml 示例
+baseURL = "https://MU-GONG-SONG.github.io/blog/"
+publishDir = "public"   # Hugo 构建输出目录
 title = "Q-song | 技术.生活.阅读.思考"
 theme = "PaperMod"
 languageCode = "zh"
