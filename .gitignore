@@ -1,0 +1,53 @@
+# ====================================
+# Hugo project .gitignore template
+# ====================================
+
+# Hugo build output (generated static site)
+public/
+resources/
+hugo_stats.json
+.hugo_build.lock
+
+# Theme example sites (not part of your site)
+themes/*/exampleSite/
+
+# Node.js dependencies (if using npm/yarn for Tailwind/PostCSS)
+node_modules/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary / Backup files
+*.bak
+*.tmp
+*.swp
+*.swo
+*.orig
+
+# Log files
+*.log
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.code-workspace
+
+# OS Trash folders
+.Trashes
+$RECYCLE.BIN/
+
+# Other build or cache directories
+.cache/
+.tmp/
+dist/
+
+# ====================================
+# End of file
+# ====================================

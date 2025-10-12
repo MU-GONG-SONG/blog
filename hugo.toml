@@ -1,0 +1,87 @@
+baseURL = "http://tubaozi.top/"
+title = "Q-song | 技术.生活.阅读.思考"
+theme = "PaperMod"
+languageCode = "zh"
+defaultContentLanguage = "zh"
+
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = true
+buildExpired = false
+enableEmoji = true
+googleAnalytics = "G-MZJS5SGFET"
+
+[minify]
+disableXML = true
+minifyOutput = true
+
+# menu.main 数组表格写法
+[[menu.main]]
+name = "🔎 搜索"
+url = "search/"
+weight = 9
+
+[[menu.main]]
+name = "⏱️ 时间轴"
+url = "archives"
+weight = 10
+
+[[menu.main]]
+name = "⛩️ 分类"
+url = "categories/"
+weight = 20
+
+[[menu.main]]
+name = "🧩 标签"
+url = "tags/"
+weight = 30
+
+[[menu.main]]
+name = "🙋🏻‍♂️ 关于"
+url = "about"
+weight = 50
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+env = "production"
+description = "个人博客"
+author = "Beeta"
+defaultTheme = "auto"
+disableThemeToggle = false
+displayFullLangName = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = false
+ShowCodeCopyButtons = true
+ShowToc = true
+
+[params.homeInfoParams]
+Title = "悟已往之不谏，知来者之可追"
+Content = """
+- ✨ 欢迎来到我的个人博客
+
+- 🤔 我在这里分享技术、读书、生活还有思考。
+"""
+
+# socialIcons 数组表格
+[[params.socialIcons]]
+name = "Github"
+url = "https://github.com/Beeta"
+
+[[params.socialIcons]]
+name = "RSS"
+url = "index.xml"
+
+[[params.socialIcons]]
+name = "email"
+url = "mailto:zrc199021@163.com"
+
+[params.label]
+text = "Q-song"
+icon = "img/足迹.png"
+iconHeight = 35
+
+[markup.goldmark.renderer]
+unsafe = true
