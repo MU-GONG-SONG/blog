@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://mu-gong-song.github.io/categories/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/categories/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/tags/hugo/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/tags/hugo/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/posts/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/posts/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/tags/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/tags/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/tags/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>http://mu-gong-song.github.io/about/</loc>
+    <loc>https://MU-GONG-SONG.github.io/blog/about/</loc>
     <lastmod>2025-10-12T12:00:00+08:00</lastmod>
   </url>
 </urlset>
