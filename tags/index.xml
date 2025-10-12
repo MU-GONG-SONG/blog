@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Q-song | 技术.生活.阅读.思考</title>
     <link>http://mu-gong-song.github.io/tags/</link>
     <description>Recent content in Tags on Q-song | 技术.生活.阅读.思考</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- 0.151.0</generator>
     <language>zh</language>
     <lastBuildDate>Sun, 12 Oct 2025 16:00:00 +0800</lastBuildDate>
     <atom:link href="http://mu-gong-song.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
