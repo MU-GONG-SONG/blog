@@ -48,7 +48,7 @@ home = ["HTML", "RSS", "JSON"]
 [params]
 env = "production"
 description = "个人博客"
-author = "Beeta"
+author = "Mumu"
 defaultTheme = "auto"
 disableThemeToggle = false
 displayFullLangName = true
