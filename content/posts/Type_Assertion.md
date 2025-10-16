@@ -1,5 +1,5 @@
 ---
-title: "Type Assertion"
+title: "Type Assertion 类型断言"
 date: 2025-10-14
 categories: ["Go语言"]
 tags: ["Assertion"]
