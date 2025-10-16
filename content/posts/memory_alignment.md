@@ -30,7 +30,7 @@ Go 里每个字段在内存中都有一个偏移量（offset），而编译器�
 
 ## 二、itab 的字段分析（以 64 位架构为例）
 我们来计算每个字段的内存偏移：
-![](.memory_alignment_images/内存对齐.png)
+![内存偏移](.memory_alignment_images/内存对齐.png)
 
 ## 三、总结
 
