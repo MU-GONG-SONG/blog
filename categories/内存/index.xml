@@ -31,7 +31,7 @@
 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。&lt;/p&gt;
 &lt;h2 id=&#34;二itab-的字段分析以-64-位架构为例&#34;&gt;二、itab 的字段分析（以 64 位架构为例）&lt;/h2&gt;
 &lt;p&gt;我们来计算每个字段的内存偏移：
-&lt;img loading=&#34;lazy&#34; src=&#34;.memory_alignment_images/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.png&#34;&gt;&lt;/p&gt;
+&lt;img alt=&#34;内存偏移&#34; loading=&#34;lazy&#34; src=&#34;.memory_alignment_images/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.png&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;三总结&#34;&gt;三、总结&lt;/h2&gt;
 &lt;p&gt;_ [4]byte 实现对齐的机制这里的关键是：
 _ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从而保证其后续字段 fun 的对齐。

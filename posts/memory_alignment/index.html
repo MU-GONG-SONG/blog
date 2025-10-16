@@ -61,7 +61,7 @@ _ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从
 比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。
 整个结构体的大小必须是其内部最大对齐单位的整数倍。
 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。</p><h2 id=二itab-的字段分析以-64-位架构为例>二、itab 的字段分析（以 64 位架构为例）<a hidden class=anchor aria-hidden=true href=#二itab-的字段分析以-64-位架构为例>#</a></h2><p>我们来计算每个字段的内存偏移：
-<img loading=lazy src=.memory_alignment_images/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.png></p><h2 id=三总结>三、总结<a hidden class=anchor aria-hidden=true href=#三总结>#</a></h2><p>_ [4]byte 实现对齐的机制这里的关键是：
+<img alt=内存偏移 loading=lazy src=.memory_alignment_images/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.png></p><h2 id=三总结>三、总结<a hidden class=anchor aria-hidden=true href=#三总结>#</a></h2><p>_ [4]byte 实现对齐的机制这里的关键是：
 _ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从而保证其后续字段 fun 的对齐。
 1.目标：fun [1]uintptr 字段是一个 uintptr 数组，在 64 位系统上，uintptr 是 8 字节，所以它必须从一个 8 字节对齐的地址开始。
 2.计算：</p><ul><li>到 hash 字段结束时，结构体的总大小为 $8 + 8 + 4 = 20$ 字节。</li><li>下一个 8 字节对齐的地址是 $24$ ($20$ 之后的第一个 $8$ 的倍数)。</li><li>因此，需要在 hash 之后和 fun 之前插入 $24 - 20 = 4$ 字节的填充。
