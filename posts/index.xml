@@ -67,13 +67,62 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
 整个结构体的大小必须是其内部最大对齐单位的整数倍。
 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。&lt;/p&gt;
 &lt;h2 id=&#34;二itab-的字段分析以-64-位架构为例&#34;&gt;二、itab 的字段分析（以 64 位架构为例）&lt;/h2&gt;
-&lt;p&gt;我们来计算每个字段的内存偏移：
-&lt;img alt=&#34;内存偏移&#34; loading=&#34;lazy&#34; src=&#34;.memory_alignment_images/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90.png&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;三总结&#34;&gt;三、总结&lt;/h2&gt;
-&lt;p&gt;_ [4]byte 实现对齐的机制这里的关键是：
-_ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从而保证其后续字段 fun 的对齐。
-1.目标：fun [1]uintptr 字段是一个 uintptr 数组，在 64 位系统上，uintptr 是 8 字节，所以它必须从一个 8 字节对齐的地址开始。
-2.计算：&lt;/p&gt;</description>
+&lt;p&gt;我们来计算每个字段的内存偏移：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;字段&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;类型&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;大小 (Size)&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;自身对齐值 (Align)&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;偏移量 (Offset)&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;备注&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;inter&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;*interfacetype&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$0 \rightarrow 8$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节对齐&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;_type&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;*_type&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$8 \rightarrow 16$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$8$ 是 $8$ 的倍数，已对齐&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;hash&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;uint32&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$16 \rightarrow 20$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$16$ 是 $4$ 的倍数，已对齐&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;_&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;[4]byte&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;1 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$20 \rightarrow 24$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;4 字节的填充 (Padding)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;fun&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;[1]uintptr&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;$24 \rightarrow 32$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节对齐 $24$ 是 $8$ 的倍数&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。&lt;/p&gt;</description>
     </item>
     <item>
       <title>初识 Hugo：打造你的静态博客</title>
