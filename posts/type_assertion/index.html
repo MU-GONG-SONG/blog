@@ -1,5 +1,6 @@
 <!doctype html><html lang=zh dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Type Assertion 类型断言 | Q-song | 技术.生活.阅读.思考</title><meta name=keywords content="Assertion"><meta name=description content='
 在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。
+
 一、基本语法
 value, ok := interfaceVar.(ConcreteType)
 interfaceVar：一个接口类型的变量
@@ -37,6 +38,7 @@ var i interface{} = “hello”
 三、两种写法 安全断言（推荐） —— 带 ok 判断 s, ok := i.(string) if ok { fmt.Println("字符串长度:", len(s)) } else { fmt.Println("i 不是一个字符串") } ✅ 优点：不会 panic，适合不确定类型时使用。
 直接断言 —— 不检查 ok s := i.(string) // 如果 i 不是 string，会 panic！ ⚠️ 风险：如果类型不匹配，程序会崩溃（panic）。'><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-10-14T00:00:00+00:00"><meta property="article:modified_time" content="2025-10-14T00:00:00+00:00"><meta property="article:tag" content="Assertion"><meta name=twitter:card content="summary"><meta name=twitter:title content="Type Assertion 类型断言"><meta name=twitter:description content='
 在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。
+
 一、基本语法
 value, ok := interfaceVar.(ConcreteType)
 interfaceVar：一个接口类型的变量

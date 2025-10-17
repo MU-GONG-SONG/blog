@@ -4,7 +4,7 @@
     <title>内存 on Q-song | 技术.生活.阅读.思考</title>
     <link>https://MU-GONG-SONG.github.io/blog/categories/%E5%86%85%E5%AD%98/</link>
     <description>Recent content in 内存 on Q-song | 技术.生活.阅读.思考</description>
-    <generator>Hugo -- 0.151.0</generator>
+    <generator>Hugo -- 0.151.2</generator>
     <language>zh</language>
     <lastBuildDate>Tue, 14 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://MU-GONG-SONG.github.io/blog/categories/%E5%86%85%E5%AD%98/index.xml" rel="self" type="application/rss+xml" />
@@ -14,7 +14,8 @@
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/</guid>
       <description>&lt;blockquote&gt;
-&lt;p&gt;看起来很简单，但它其实是 为了内存对齐而存在的。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;看起来很简单，但它其实是 为了内存对齐而存在的。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type itab struct {
     inter *interfacetype // 接口类型信息
     _type *_type         // 实现接口的具体类型信息

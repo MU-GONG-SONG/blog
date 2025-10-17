@@ -4,7 +4,7 @@
     <title>Go语言 on Q-song | 技术.生活.阅读.思考</title>
     <link>https://MU-GONG-SONG.github.io/blog/categories/go%E8%AF%AD%E8%A8%80/</link>
     <description>Recent content in Go语言 on Q-song | 技术.生活.阅读.思考</description>
-    <generator>Hugo -- 0.151.0</generator>
+    <generator>Hugo -- 0.151.2</generator>
     <language>zh</language>
     <lastBuildDate>Tue, 14 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://MU-GONG-SONG.github.io/blog/categories/go%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
@@ -14,7 +14,8 @@
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://MU-GONG-SONG.github.io/blog/posts/type_assertion/</guid>
       <description>&lt;blockquote&gt;
-&lt;p&gt;在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;一基本语法&#34;&gt;一、基本语法&lt;/h2&gt;
 &lt;p&gt;value, ok := interfaceVar.(ConcreteType)&lt;/p&gt;
 &lt;p&gt;interfaceVar：一个接口类型的变量

@@ -1,51 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Assertion on Q-song | 技术.生活.阅读.思考</title>
-    <link>https://MU-GONG-SONG.github.io/blog/tags/assertion/</link>
-    <description>Recent content in Assertion on Q-song | 技术.生活.阅读.思考</description>
+    <title>数据库 on Q-song | 技术.生活.阅读.思考</title>
+    <link>https://MU-GONG-SONG.github.io/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on Q-song | 技术.生活.阅读.思考</description>
     <generator>Hugo -- 0.151.2</generator>
     <language>zh</language>
     <lastBuildDate>Tue, 14 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://MU-GONG-SONG.github.io/blog/tags/assertion/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Type Assertion 类型断言</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/type_assertion/</link>
-      <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/type_assertion/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;一基本语法&#34;&gt;一、基本语法&lt;/h2&gt;
-&lt;p&gt;value, ok := interfaceVar.(ConcreteType)&lt;/p&gt;
-&lt;p&gt;interfaceVar：一个接口类型的变量
-ConcreteType：你期望它实际存储的具体类型（如 int, string, MyStruct 等）
-value：如果断言成功，就是该类型的值
-ok：布尔值，表示断言是否成功&lt;/p&gt;
-&lt;h2 id=&#34;二为什么需要类型断言&#34;&gt;二、为什么需要类型断言？&lt;/h2&gt;
-&lt;p&gt;Go 的接口（interface）可以存储任何类型的值，但当你想使用这个值的具体方法或字段时，就必须知道它的真实类型。&lt;/p&gt;
-&lt;p&gt;var i interface{} = &amp;ldquo;hello&amp;rdquo;&lt;/p&gt;
-&lt;p&gt;// 我知道它是 string，但接口本身不能直接调用 len()
-s := i.(string)  // 类型断言：断言 i 是 string
-fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
-&lt;h2 id=&#34;三两种写法&#34;&gt;三、两种写法&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;安全断言（推荐） —— 带 ok 判断&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;
-   s, ok := i.(string)
-   if ok {
-   fmt.Println(&amp;#34;字符串长度:&amp;#34;, len(s))
-   } else {
-   fmt.Println(&amp;#34;i 不是一个字符串&amp;#34;)
-   }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;✅ 优点：不会 panic，适合不确定类型时使用。&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;直接断言 —— 不检查 ok&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   s := i.(string)  // 如果 i 不是 string，会 panic！
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;⚠️ 风险：如果类型不匹配，程序会崩溃（panic）。&lt;/p&gt;</description>
-    </item>
+    <atom:link href="https://MU-GONG-SONG.github.io/blog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>什么是主键和唯一键？它们的区别是什么？</title>
       <link>https://MU-GONG-SONG.github.io/blog/posts/key/</link>
