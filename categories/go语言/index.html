@@ -6,8 +6,7 @@ interfaceVar：一个接口类型的变量 ConcreteType：你期望它实际存�
 二、为什么需要类型断言？ Go 的接口（interface）可以存储任何类型的值，但当你想使用这个值的具体方法或字段时，就必须知道它的真实类型。
 var i interface{} = “hello”
 // 我知道它是 string，但接口本身不能直接调用 len() s := i.(string) // 类型断言：断言 i 是 string fmt.Println(len(s)) // 现在可以了
-三、两种写法 安全断言（推荐） —— 带 ok 判断 s, ok := i.(string) if ok { fmt.Println("字符串长度:", len(s)) } else { fmt.Println("i 不是一个字符串") } ✅ 优点：不会 panic，适合不确定类型时使用。
-直接断言 —— 不检查 ok s := i.(string) // 如果 i 不是 string，会 panic！ ⚠️ 风险：如果类型不匹配，程序会崩溃（panic）。
+三、两种写法 安全断言（推荐） —— 带 ok 判断 s, ok := i.(string) if ok { fmt.Println("字符串长度:", len(s)) } else { fmt.Println("i 不是一个字符串") } 优点：不会 panic，适合不确定类型时使用。 直接断言 —— 不检查 ok s := i.(string) // 如果 i 不是 string，会 panic！ 面临的风险：如果类型不匹配，程序会崩溃（panic）。 仅在你100%确定类型时使用。
 ...</p></div><footer class=entry-footer><span title='2025-10-14 00:00:00 +0000 UTC'>2025年10月14日</span>&nbsp;·&nbsp;<span>Mumu</span></footer><a class=entry-link aria-label="post link to Type Assertion 类型断言" href=https://MU-GONG-SONG.github.io/blog/posts/type_assertion/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>我的第一篇博客</h2></header><div class=entry-content><p>今天开始记录我在 Go 高并发项目中的一些心得体会。</p></div><footer class=entry-footer><span title='2025-10-12 00:00:00 +0000 UTC'>2025年10月12日</span>&nbsp;·&nbsp;<span>Mumu</span></footer><a class=entry-link aria-label="post link to 我的第一篇博客" href=https://MU-GONG-SONG.github.io/blog/posts/fist-blog/></a></article></main><footer class=footer><span>&copy; 2025 <a href=https://MU-GONG-SONG.github.io/blog/>Q-song | 技术.生活.阅读.思考</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &

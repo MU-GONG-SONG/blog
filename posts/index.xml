@@ -39,12 +39,15 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
    } else {
    fmt.Println(&amp;#34;i 不是一个字符串&amp;#34;)
    }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;✅ 优点：不会 panic，适合不确定类型时使用。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;优点：不会 panic，适合不确定类型时使用。
+&lt;/code&gt;&lt;/pre&gt;
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;直接断言 —— 不检查 ok&lt;/li&gt;
 &lt;/ol&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   s := i.(string)  // 如果 i 不是 string，会 panic！
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;⚠️ 风险：如果类型不匹配，程序会崩溃（panic）。&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;面临的风险：如果类型不匹配，程序会崩溃（panic）。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;仅在你100%确定类型时使用。&lt;/p&gt;</description>
     </item>
     <item>
       <title>内存对齐（memory alignment）</title>
@@ -77,7 +80,7 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
           &lt;th style=&#34;text-align: left&#34;&gt;类型&lt;/th&gt;
           &lt;th style=&#34;text-align: left&#34;&gt;大小 (Size)&lt;/th&gt;
           &lt;th style=&#34;text-align: left&#34;&gt;自身对齐值 (Align)&lt;/th&gt;
-          &lt;th style=&#34;text-align: left&#34;&gt;偏移量 (Offset)&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;偏移量 (Offset)&lt;br/&gt;单位:字节&lt;/th&gt;
           &lt;th style=&#34;text-align: left&#34;&gt;备注&lt;/th&gt;
       &lt;/tr&gt;
   &lt;/thead&gt;
@@ -87,7 +90,7 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;*interfacetype&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$0 \rightarrow 8$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0 → 8&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节对齐&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
@@ -95,23 +98,23 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;*_type&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$8 \rightarrow 16$ 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$8$ 是 $8$ 的倍数，已对齐&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8→16&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8  是  8  的倍数，已对齐&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;hash&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;uint32&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$16 \rightarrow 20$ 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$16$ 是 $4$ 的倍数，已对齐&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;16→20&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;16  是  4  的倍数，已对齐&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;_&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;[4]byte&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;4 字节&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;1 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$20 \rightarrow 24$ 字节&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;20→24&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;4 字节的填充 (Padding)&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
@@ -119,8 +122,8 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;[1]uintptr&lt;/code&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
           &lt;td style=&#34;text-align: left&#34;&gt;8 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;$24 \rightarrow 32$ 字节&lt;/td&gt;
-          &lt;td style=&#34;text-align: left&#34;&gt;8 字节对齐 $24$ 是 $8$ 的倍数&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;24→32&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8 字节对齐  24  是  8  的倍数&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
