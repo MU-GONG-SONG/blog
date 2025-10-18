@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Q-song | 技术.生活.阅读.思考</title>
-    <link>https://MU-GONG-SONG.github.io/blog/</link>
-    <description>Recent content on Q-song | 技术.生活.阅读.思考</description>
+    <title>SQL on Q-song | 技术.生活.阅读.思考</title>
+    <link>https://MU-GONG-SONG.github.io/blog/categories/sql/</link>
+    <description>Recent content in SQL on Q-song | 技术.生活.阅读.思考</description>
     <generator>Hugo -- 0.151.2</generator>
     <language>zh</language>
-    <lastBuildDate>Sun, 12 Oct 2025 12:00:00 +0800</lastBuildDate>
-    <atom:link href="https://MU-GONG-SONG.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>About — 关于我</title>
-      <link>https://MU-GONG-SONG.github.io/blog/about/</link>
-      <pubDate>Sun, 12 Oct 2025 12:00:00 +0800</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/about/</guid>
-      <description>关于我的简单介绍、联系方式和创作理念。</description>
-    </item>
+    <lastBuildDate>Sun, 12 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://MU-GONG-SONG.github.io/blog/categories/sql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SQL_Index 索引</title>
       <link>https://MU-GONG-SONG.github.io/blog/posts/</link>
