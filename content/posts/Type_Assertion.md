@@ -37,14 +37,14 @@ fmt.Println(len(s))  // 现在可以了
    }
 ````
 
-   ✅ 优点：不会 panic，适合不确定类型时使用。
+    优点：不会 panic，适合不确定类型时使用。
 
 2. 直接断言 —— 不检查 ok
 ````
    s := i.(string)  // 如果 i 不是 string，会 panic！
 ````
 
-   ⚠️ 风险：如果类型不匹配，程序会崩溃（panic）。
+    面临的风险：如果类型不匹配，程序会崩溃（panic）。
 
 仅在你100%确定类型时使用。
 
@@ -92,7 +92,7 @@ var i interface{} = 42
 s := i.(string) // panic: interface is int, not string
 ````
 
-✅ 正确做法：
+ 优雅做法：
 ````
 
 s, ok := i.(string)
