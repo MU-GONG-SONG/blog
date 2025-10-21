@@ -6,7 +6,7 @@
 排序/分组（Order By/Group By）： 经常用于排序或分组的列。
 b. 考虑联合索引（Composite Index）： 最左前缀原则 (Leftmost Prefix Principle)： 这是联合索引设计的核心。如果创建了 (A, B, C) 的联合索引，它可以用于查询 WHERE A = ?、WHERE A = ? AND B = ?、WHERE A = ? AND B = ? AND C = ?，但不能单独用于 WHERE B = ? 或 WHERE C = ?。
 场景： 在设计订单查询接口时，如果经常查询 WHERE user_id = ? AND order_status = ?，应建立 (user_id, order_status) 的联合索引。
-...</p></div><footer class=entry-footer><span title='2025-10-12 00:00:00 +0000 UTC'>2025年10月12日</span>&nbsp;·&nbsp;<span>Mumu</span></footer><a class=entry-link aria-label="post link to SQL_Index 索引" href=https://MU-GONG-SONG.github.io/blog/posts/></a></article></main><footer class=footer><span>&copy; 2025 <a href=https://MU-GONG-SONG.github.io/blog/>Q-song | 技术.生活.阅读.思考</a></span> ·
+...</p></div><footer class=entry-footer><span title='2025-10-20 00:00:00 +0000 UTC'>2025年10月20日</span>&nbsp;·&nbsp;<span>Mumu</span></footer><a class=entry-link aria-label="post link to SQL_Index 索引" href=https://MU-GONG-SONG.github.io/blog/posts/></a></article></main><footer class=footer><span>&copy; 2025 <a href=https://MU-GONG-SONG.github.io/blog/>Q-song | 技术.生活.阅读.思考</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
 <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>

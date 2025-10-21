@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://MU-GONG-SONG.github.io/blog/about/</loc>
-    <lastmod>2025-10-12T12:00:00+08:00</lastmod>
+    <loc>https://MU-GONG-SONG.github.io/blog/categories/</loc>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/</loc>
-    <lastmod>2025-10-12T12:00:00+08:00</lastmod>
-  </url><url>
-    <loc>https://MU-GONG-SONG.github.io/blog/categories/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/categories/sql/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/posts/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/tags/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/tags/%E5%91%BD%E4%B8%AD/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://MU-GONG-SONG.github.io/blog/tags/%E5%A4%B1%E6%95%88/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://MU-GONG-SONG.github.io/blog/about/</loc>
+    <lastmod>2025-10-12T12:00:00+08:00</lastmod>
   </url>
 </urlset>

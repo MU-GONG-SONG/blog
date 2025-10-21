@@ -6,19 +6,12 @@
     <description>Recent content on Q-song | 技术.生活.阅读.思考</description>
     <generator>Hugo -- 0.151.2</generator>
     <language>zh</language>
-    <lastBuildDate>Sun, 12 Oct 2025 12:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 20 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://MU-GONG-SONG.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>About — 关于我</title>
-      <link>https://MU-GONG-SONG.github.io/blog/about/</link>
-      <pubDate>Sun, 12 Oct 2025 12:00:00 +0800</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/about/</guid>
-      <description>关于我的简单介绍、联系方式和创作理念。</description>
-    </item>
     <item>
       <title>SQL_Index 索引</title>
       <link>https://MU-GONG-SONG.github.io/blog/posts/</link>
-      <pubDate>Sun, 12 Oct 2025 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://MU-GONG-SONG.github.io/blog/posts/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在 Go 后端开发中，我们通常使用 MySQL 或 PostgreSQL 等关系型数据库，索引设计的好坏直接决定了服务接口的响应速度。&lt;/p&gt;
@@ -32,6 +25,13 @@
 &lt;h4 id=&#34;b-考虑联合索引composite-index&#34;&gt;b. 考虑联合索引（Composite Index）：&lt;/h4&gt;
 &lt;p&gt;最左前缀原则 (Leftmost Prefix Principle)： 这是联合索引设计的核心。如果创建了 (A, B, C) 的联合索引，它可以用于查询 WHERE A = ?、WHERE A = ? AND B = ?、WHERE A = ? AND B = ? AND C = ?，但不能单独用于 WHERE B = ? 或 WHERE C = ?。&lt;/p&gt;
 &lt;p&gt;场景： 在设计订单查询接口时，如果经常查询 WHERE user_id = ? AND order_status = ?，应建立 (user_id, order_status) 的联合索引。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About — 关于我</title>
+      <link>https://MU-GONG-SONG.github.io/blog/about/</link>
+      <pubDate>Sun, 12 Oct 2025 12:00:00 +0800</pubDate>
+      <guid>https://MU-GONG-SONG.github.io/blog/about/</guid>
+      <description>关于我的简单介绍、联系方式和创作理念。</description>
     </item>
   </channel>
 </rss>
