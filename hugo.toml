@@ -70,7 +70,7 @@ Content = """
 # socialIcons 数组表格
 [[params.socialIcons]]
 name = "Github"
-url = "https://github.com/Beeta"
+url = "https://github.com/MU-GONG-SONG"
 
 [[params.socialIcons]]
 name = "RSS"
@@ -78,7 +78,7 @@ url = "index.xml"
 
 [[params.socialIcons]]
 name = "email"
-url = "mailto:zrc199021@163.com"
+url = "mailto:1293589405@qq.com"
 
 [params.label]
 text = "Q-song"
