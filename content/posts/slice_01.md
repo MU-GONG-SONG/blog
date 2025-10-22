@@ -1,8 +1,8 @@
 ---
-title: "SQL_Index 索引"
+title: "slice 和 数组"
 date: 2025-10-20
-categories: ["SQL"]
-tags: ["命中", "失效"]
+categories: ["slice"]
+tags: ["数组", "切片"]
 draft: false
 ---
 
