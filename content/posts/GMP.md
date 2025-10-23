@@ -6,11 +6,11 @@ tags: ["GMP"]
 draft: false
 ---
 
-
->主键（Primary Key）是唯一标识每行的非空字段，每表只能有一个；
-> 唯一键（Unique Key）是保证字段值唯一，但允许为NULL，每表可有多个。
-
 ### Go sheduler 是什么?
+
+>Go 程序的执行有两个层面：Go Program 和 Runtime，即用户程序和运行时。它们之间通过函数调用来实现内存管理、channel 通信、goroutine 创建等功能。用户程序进行的系统调用都会被
+Runtime 拦截，以此来帮助它进行调度以及垃圾回收相关的工作。
+
 Go scheduler 可以说是 Go 运行时的一个最重要的 部分了。 Runtime 维护所有的 goroutine ，并通过
 scheduler 来进行调度。goroutine 和 threads 是独立的， 但是 goroutine 要依赖 threads 才能执行。
 Go 程序执行的高效和 scheduler 的调度是分不开的。 
