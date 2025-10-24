@@ -19,17 +19,14 @@ Go 程序执行的高效和 scheduler 的调度是分不开的。
 
 ### G、M、P三个基础的结构体来实现 goroutine 的调度：
 ~~~
-G 代表一个 goroutine，它包含：表示 goroutine 栈
-的一些字段，指示当前 goroutine 的状态，指示当前运行到的指令地址，也就是 PC 值。
+G 代表一个 goroutine，它包含：表示 goroutine 栈的一些字段，指示当前 goroutine 的状态，指示当前运行到的指令地址，也就是 PC 值。
 M 表示内核线程，包含正在运行的 goroutine 等字段。
-P 代表一个虚拟的 Processor，它维护一个处于 Runnable 状态的 goroutine 队列，M 需要获
-得 P 才能运行 G。
+P 代表一个虚拟的CPU Processor，它维护一个处于 Runnable 状态的 goroutine 队列，M 需要获得 P 才能运行 G。
 ~~~
 当然还有一个核心的结构体：sched，它总揽全局，维持整个调度器的运行。
 Runtime 起始时会启动一些 G：垃圾回收的 G，执行调度的 G，运行用户代码的 G；并且会创建一
-个 M 用来开始 G 的运行。随着时间的推移，更多的 G 会被创建出来，更多的 M 也会被创建出来。
-在 Go 的早期版本，并没有 P 这个结构体，M 必须从一个全局的队列里获取要运行的 G，因
-此需要获取一个全局的锁，当并发量大的时候，锁就成了瓶颈。后来调度器在 Dmitry Vyokov 里，加
+个 M 用来开始 G 的运行。随着时间的推移，G和M的创建数量逐渐增多。
+在 Go 的早期版本，并没有 P 这个结构体，M 必须从一个全局的队列里获取要运行的 G，因此需要获取一个全局的锁，当并发量大的时候，锁就成了瓶颈。后来调度器在 Dmitry Vyukov (Go 语言运行时 runtime 和调度器的核心贡献者之一) ，加
 上了 P 结构体。每个 P 维护一个处于 Runnable 状态的 G 的队列，解决了原来的全局锁问题。
 ~~~
 Go scheduler 的目标：将 goroutine 调度到内核线程上。
