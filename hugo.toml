@@ -46,6 +46,9 @@ weight = 50
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
+section = ["HTML"]
+taxonomy = ["HTML"]
+term = ["HTML"]
 
 [params]
 env = "production"
@@ -58,6 +61,17 @@ ShowPostNavLinks = true
 ShowBreadCrumbs = false
 ShowCodeCopyButtons = true
 ShowToc = true
+mainSections = ["posts"]
+
+[params.fuseOpts]
+keys = [
+  {name = "title", weight = 0.8},
+  {name = "summary", weight = 0.4},
+  {name = "content", weight = 0.2},
+  {name = "permalink", weight = 0.1}
+]
+limit = 50
+threshold = 0.3
 
 [params.homeInfoParams]
 Title = "悟已往之不谏，知来者之可追"
