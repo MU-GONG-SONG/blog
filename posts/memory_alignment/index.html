@@ -1,0 +1,176 @@
+<!doctype html><html lang=zh dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>内存对齐（memory alignment） | Q-song | 技术.生活.阅读.思考</title><meta name=keywords content="memory"><meta name=description content="
+看起来很简单，但它其实是 为了内存对齐而存在的。
+
+type itab struct {
+    inter *interfacetype // 接口类型信息
+    _type *_type         // 实现接口的具体类型信息
+    hash  uint32         // 类型 hash 值
+    _     [4]byte
+    fun   [1]uintptr     // 实现接口方法的函数地址
+}
+一、Go 的结构体内存布局规则
+Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。
+规则大致是：
+每个字段的起始地址必须是该字段类型的对齐倍数。
+比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。
+整个结构体的大小必须是其内部最大对齐单位的整数倍。
+编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。
+二、itab 的字段分析（以 64 位架构为例）
+我们来计算每个字段的内存偏移：
+
+  
+      
+          字段
+          类型
+          大小 (Size)
+          自身对齐值 (Align)
+          偏移量 (Offset)单位:字节
+          备注
+      
+  
+  
+      
+          inter
+          *interfacetype
+          8 字节
+          8 字节
+          0 → 8
+          8 字节对齐
+      
+      
+          _type
+          *_type
+          8 字节
+          8 字节
+          8→16
+          8  是  8  的倍数，已对齐
+      
+      
+          hash
+          uint32
+          4 字节
+          4 字节
+          16→20
+          16  是  4  的倍数，已对齐
+      
+      
+          _
+          [4]byte
+          4 字节
+          1 字节
+          20→24
+          4 字节的填充 (Padding)
+      
+      
+          fun
+          [1]uintptr
+          8 字节
+          8 字节
+          24→32
+          8 字节对齐  24  是  8  的倍数
+      
+  
+
+总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。"><meta name=author content="Mumu"><link rel=canonical href=https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/><link crossorigin=anonymous href=/blog/assets/css/stylesheet.a090830a421002426baafbd314e38f149d77b4c48a12ee9312700d770b27fb26.css integrity="sha256-oJCDCkIQAkJrqvvTFOOPFJ13tMSKEu6TEnANdwsn+yY=" rel="preload stylesheet" as=style><link rel=icon href=https://MU-GONG-SONG.github.io/blog/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://MU-GONG-SONG.github.io/blog/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://MU-GONG-SONG.github.io/blog/favicon-32x32.png><link rel=apple-touch-icon href=https://MU-GONG-SONG.github.io/blog/apple-touch-icon.png><link rel=mask-icon href=https://MU-GONG-SONG.github.io/blog/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script async src="https://www.googletagmanager.com/gtag/js?id=G-MZJS5SGFET"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-MZJS5SGFET")}</script><meta property="og:url" content="https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/"><meta property="og:site_name" content="Q-song | 技术.生活.阅读.思考"><meta property="og:title" content="内存对齐（memory alignment）"><meta property="og:description" content=" 看起来很简单，但它其实是 为了内存对齐而存在的。
+type itab struct { inter *interfacetype // 接口类型信息 _type *_type // 实现接口的具体类型信息 hash uint32 // 类型 hash 值 _ [4]byte fun [1]uintptr // 实现接口方法的函数地址 } 一、Go 的结构体内存布局规则 Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。
+规则大致是： 每个字段的起始地址必须是该字段类型的对齐倍数。 比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。 整个结构体的大小必须是其内部最大对齐单位的整数倍。 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。
+二、itab 的字段分析（以 64 位架构为例） 我们来计算每个字段的内存偏移：
+字段 类型 大小 (Size) 自身对齐值 (Align) 偏移量 (Offset)单位:字节 备注 inter *interfacetype 8 字节 8 字节 0 → 8 8 字节对齐 _type *_type 8 字节 8 字节 8→16 8 是 8 的倍数，已对齐 hash uint32 4 字节 4 字节 16→20 16 是 4 的倍数，已对齐 _ [4]byte 4 字节 1 字节 20→24 4 字节的填充 (Padding) fun [1]uintptr 8 字节 8 字节 24→32 8 字节对齐 24 是 8 的倍数 总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。"><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-10-14T00:00:00+00:00"><meta property="article:modified_time" content="2025-10-14T00:00:00+00:00"><meta property="article:tag" content="Memory"><meta name=twitter:card content="summary"><meta name=twitter:title content="内存对齐（memory alignment）"><meta name=twitter:description content="
+看起来很简单，但它其实是 为了内存对齐而存在的。
+
+type itab struct {
+    inter *interfacetype // 接口类型信息
+    _type *_type         // 实现接口的具体类型信息
+    hash  uint32         // 类型 hash 值
+    _     [4]byte
+    fun   [1]uintptr     // 实现接口方法的函数地址
+}
+一、Go 的结构体内存布局规则
+Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。
+规则大致是：
+每个字段的起始地址必须是该字段类型的对齐倍数。
+比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。
+整个结构体的大小必须是其内部最大对齐单位的整数倍。
+编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。
+二、itab 的字段分析（以 64 位架构为例）
+我们来计算每个字段的内存偏移：
+
+  
+      
+          字段
+          类型
+          大小 (Size)
+          自身对齐值 (Align)
+          偏移量 (Offset)单位:字节
+          备注
+      
+  
+  
+      
+          inter
+          *interfacetype
+          8 字节
+          8 字节
+          0 → 8
+          8 字节对齐
+      
+      
+          _type
+          *_type
+          8 字节
+          8 字节
+          8→16
+          8  是  8  的倍数，已对齐
+      
+      
+          hash
+          uint32
+          4 字节
+          4 字节
+          16→20
+          16  是  4  的倍数，已对齐
+      
+      
+          _
+          [4]byte
+          4 字节
+          1 字节
+          20→24
+          4 字节的填充 (Padding)
+      
+      
+          fun
+          [1]uintptr
+          8 字节
+          8 字节
+          24→32
+          8 字节对齐  24  是  8  的倍数
+      
+  
+
+总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://MU-GONG-SONG.github.io/blog/posts/"},{"@type":"ListItem","position":2,"name":"内存对齐（memory alignment）","item":"https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"内存对齐（memory alignment）","name":"内存对齐（memory alignment）","description":" 看起来很简单，但它其实是 为了内存对齐而存在的。\ntype itab struct { inter *interfacetype // 接口类型信息 _type *_type // 实现接口的具体类型信息 hash uint32 // 类型 hash 值 _ [4]byte fun [1]uintptr // 实现接口方法的函数地址 } 一、Go 的结构体内存布局规则 Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。\n规则大致是： 每个字段的起始地址必须是该字段类型的对齐倍数。 比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。 整个结构体的大小必须是其内部最大对齐单位的整数倍。 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。\n二、itab 的字段分析（以 64 位架构为例） 我们来计算每个字段的内存偏移：\n字段 类型 大小 (Size) 自身对齐值 (Align) 偏移量 (Offset)单位:字节 备注 inter *interfacetype 8 字节 8 字节 0 → 8 8 字节对齐 _type *_type 8 字节 8 字节 8→16 8 是 8 的倍数，已对齐 hash uint32 4 字节 4 字节 16→20 16 是 4 的倍数，已对齐 _ [4]byte 4 字节 1 字节 20→24 4 字节的填充 (Padding) fun [1]uintptr 8 字节 8 字节 24→32 8 字节对齐 24 是 8 的倍数 总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。\n","keywords":["memory"],"articleBody":" 看起来很简单，但它其实是 为了内存对齐而存在的。\ntype itab struct { inter *interfacetype // 接口类型信息 _type *_type // 实现接口的具体类型信息 hash uint32 // 类型 hash 值 _ [4]byte fun [1]uintptr // 实现接口方法的函数地址 } 一、Go 的结构体内存布局规则 Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。\n规则大致是： 每个字段的起始地址必须是该字段类型的对齐倍数。 比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。 整个结构体的大小必须是其内部最大对齐单位的整数倍。 编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。\n二、itab 的字段分析（以 64 位架构为例） 我们来计算每个字段的内存偏移：\n字段 类型 大小 (Size) 自身对齐值 (Align) 偏移量 (Offset)单位:字节 备注 inter *interfacetype 8 字节 8 字节 0 → 8 8 字节对齐 _type *_type 8 字节 8 字节 8→16 8 是 8 的倍数，已对齐 hash uint32 4 字节 4 字节 16→20 16 是 4 的倍数，已对齐 _ [4]byte 4 字节 1 字节 20→24 4 字节的填充 (Padding) fun [1]uintptr 8 字节 8 字节 24→32 8 字节对齐 24 是 8 的倍数 总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。\n三、分析 _ [4]byte 实现对齐的机制这里的关键是： _ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从而保证其后续字段 fun 的对齐。 1.目标：fun [1]uintptr 字段是一个 uintptr 数组，在 64 位系统上，uintptr 是 8 字节，所以它必须从一个 8 字节对齐的地址开始。 2.计算：\n到 hash 字段结束时，结构体的总大小为 8 + 8 + 4 = 20 字节。 下一个 8 字节对齐的地址是 24 ( 20 之后的第一个 8 的倍数)。 因此，需要在 hash 之后和 fun 之前插入 24 - 20 = 4 字节的填充。 3.实现：Go 源码通过显式地添加一个占位符字段 _ [4]byte 来实现这 4 字节的填充，从而确保 fun [1]uintptr 能够从 24 字节的偏移量开始，完美地实现 8 字节对齐。 四、Go 语言中的字段重排序方法 -在 Go 中，重排序字段以实现内存优化的基本原则是：将占用内存空间小的字段（即对齐要求小的字段）放在前面，然后依次放置占用空间大的字段。 优化规则（降序排列）： -最有效的排序策略是：将结构体中的字段按它们自身大小（即对齐要求）从大到小排列。 字段大小对齐要求 常用类型 优先级 最大 (8 字节) int64, float64, uint64, 指针类型 (*T), string, slice, interface 高 (先放) 中等 (4 字节) int32, float32, uint32 中 最小 (2 字节) int16, uint16 低 最小 (1 字节) bool, int8, uint8, byte 最低 (后放) ","wordCount":"240","inLanguage":"zh","datePublished":"2025-10-14T00:00:00Z","dateModified":"2025-10-14T00:00:00Z","author":{"@type":"Person","name":"Mumu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/"},"publisher":{"@type":"Organization","name":"Q-song | 技术.生活.阅读.思考","logo":{"@type":"ImageObject","url":"https://MU-GONG-SONG.github.io/blog/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://MU-GONG-SONG.github.io/blog/ accesskey=h title="Q-song (Alt + H)"><img src=https://MU-GONG-SONG.github.io/blog/img/%E8%B6%B3%E8%BF%B9.png alt aria-label=logo height=35>Q-song</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://MU-GONG-SONG.github.io/blog/search/ title="🔎 搜索"><span>🔎 搜索</span></a></li><li><a href=https://MU-GONG-SONG.github.io/blog/archives title="⏱️ 时间轴"><span>⏱️ 时间轴</span></a></li><li><a href=https://MU-GONG-SONG.github.io/blog/categories/ title="⛩️ 分类"><span>⛩️ 分类</span></a></li><li><a href=https://MU-GONG-SONG.github.io/blog/tags/ title="🧩 标签"><span>🧩 标签</span></a></li><li><a href=https://MU-GONG-SONG.github.io/blog/about title="🙋🏻‍♂️ 关于"><span>🙋🏻‍♂️ 关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">内存对齐（memory alignment）</h1><div class=post-meta><span title='2025-10-14 00:00:00 +0000 UTC'>2025年10月14日</span>&nbsp;·&nbsp;<span>Mumu</span></div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>目录</span></summary><div class=inner><ul><li><a href=#%e4%b8%80go-%e7%9a%84%e7%bb%93%e6%9e%84%e4%bd%93%e5%86%85%e5%ad%98%e5%b8%83%e5%b1%80%e8%a7%84%e5%88%99 aria-label="一、Go 的结构体内存布局规则">一、Go 的结构体内存布局规则</a></li><li><a href=#%e4%ba%8citab-%e7%9a%84%e5%ad%97%e6%ae%b5%e5%88%86%e6%9e%90%e4%bb%a5-64-%e4%bd%8d%e6%9e%b6%e6%9e%84%e4%b8%ba%e4%be%8b aria-label="二、itab 的字段分析（以 64 位架构为例）">二、itab 的字段分析（以 64 位架构为例）</a></li><li><a href=#%e4%b8%89%e5%88%86%e6%9e%90 aria-label=三、分析>三、分析</a></li><li><a href=#%e5%9b%9bgo-%e8%af%ad%e8%a8%80%e4%b8%ad%e7%9a%84%e5%ad%97%e6%ae%b5%e9%87%8d%e6%8e%92%e5%ba%8f%e6%96%b9%e6%b3%95 aria-label="四、Go 语言中的字段重排序方法">四、Go 语言中的字段重排序方法</a></li></ul></div></details></div><div class=post-content><blockquote><p>看起来很简单，但它其实是 为了内存对齐而存在的。</p></blockquote><pre tabindex=0><code>type itab struct {
+    inter *interfacetype // 接口类型信息
+    _type *_type         // 实现接口的具体类型信息
+    hash  uint32         // 类型 hash 值
+    _     [4]byte
+    fun   [1]uintptr     // 实现接口方法的函数地址
+}
+</code></pre><h2 id=一go-的结构体内存布局规则>一、Go 的结构体内存布局规则<a hidden class=anchor aria-hidden=true href=#一go-的结构体内存布局规则>#</a></h2><p>Go 里每个字段在内存中都有一个偏移量（offset），而编译器会自动插入 padding（填充字节），以保证每个字段都按其类型对齐（alignment）。</p><p>规则大致是：
+每个字段的起始地址必须是该字段类型的对齐倍数。
+比如：uint32 对齐要求 4 字节，uintptr（在 64 位机上）对齐要求 8 字节。
+整个结构体的大小必须是其内部最大对齐单位的整数倍。
+编译器自动插入 padding 字节，但有时源码里会显式加 _ [N]byte 来占位或兼容 ABI。</p><h2 id=二itab-的字段分析以-64-位架构为例>二、itab 的字段分析（以 64 位架构为例）<a hidden class=anchor aria-hidden=true href=#二itab-的字段分析以-64-位架构为例>#</a></h2><p>我们来计算每个字段的内存偏移：</p><table><thead><tr><th style=text-align:left>字段</th><th style=text-align:left>类型</th><th style=text-align:left>大小 (Size)</th><th style=text-align:left>自身对齐值 (Align)</th><th style=text-align:left>偏移量 (Offset)<br>单位:字节</th><th style=text-align:left>备注</th></tr></thead><tbody><tr><td style=text-align:left><code>inter</code></td><td style=text-align:left><code>*interfacetype</code></td><td style=text-align:left>8 字节</td><td style=text-align:left>8 字节</td><td style=text-align:left>0 → 8</td><td style=text-align:left>8 字节对齐</td></tr><tr><td style=text-align:left><code>_type</code></td><td style=text-align:left><code>*_type</code></td><td style=text-align:left>8 字节</td><td style=text-align:left>8 字节</td><td style=text-align:left>8→16</td><td style=text-align:left>8 是 8 的倍数，已对齐</td></tr><tr><td style=text-align:left><code>hash</code></td><td style=text-align:left><code>uint32</code></td><td style=text-align:left>4 字节</td><td style=text-align:left>4 字节</td><td style=text-align:left>16→20</td><td style=text-align:left>16 是 4 的倍数，已对齐</td></tr><tr><td style=text-align:left><code>_</code></td><td style=text-align:left><code>[4]byte</code></td><td style=text-align:left>4 字节</td><td style=text-align:left>1 字节</td><td style=text-align:left>20→24</td><td style=text-align:left>4 字节的填充 (Padding)</td></tr><tr><td style=text-align:left><code>fun</code></td><td style=text-align:left><code>[1]uintptr</code></td><td style=text-align:left>8 字节</td><td style=text-align:left>8 字节</td><td style=text-align:left>24→32</td><td style=text-align:left>8 字节对齐 24 是 8 的倍数</td></tr></tbody></table><p>总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。</p><h2 id=三分析>三、分析<a hidden class=anchor aria-hidden=true href=#三分析>#</a></h2><p>_ [4]byte 实现对齐的机制这里的关键是：
+_ [4]byte 本身不实现对齐，它的存在是作为填充（Padding），从而保证其后续字段 fun 的对齐。
+1.目标：fun [1]uintptr 字段是一个 uintptr 数组，在 64 位系统上，uintptr 是 8 字节，所以它必须从一个 8 字节对齐的地址开始。
+2.计算：</p><ul><li>到 hash 字段结束时，结构体的总大小为 8 + 8 + 4 = 20 字节。</li><li>下一个 8 字节对齐的地址是 24 ( 20 之后的第一个 8 的倍数)。</li><li>因此，需要在 hash 之后和 fun 之前插入 24 - 20 = 4 字节的填充。
+3.实现：Go 源码通过显式地添加一个占位符字段 _ [4]byte 来实现这 4 字节的填充，从而确保 fun [1]uintptr 能够从 24 字节的偏移量开始，完美地实现 8 字节对齐。</li></ul><h2 id=四go-语言中的字段重排序方法>四、Go 语言中的字段重排序方法<a hidden class=anchor aria-hidden=true href=#四go-语言中的字段重排序方法>#</a></h2><pre tabindex=0><code>-在 Go 中，重排序字段以实现内存优化的基本原则是：将占用内存空间小的字段（即对齐要求小的字段）放在前面，然后依次放置占用空间大的字段。
+优化规则（降序排列）：
+-最有效的排序策略是：将结构体中的字段按它们自身大小（即对齐要求）从大到小排列。
+</code></pre><table><thead><tr><th>字段大小对齐要求</th><th>常用类型</th><th>优先级</th></tr></thead><tbody><tr><td>最大 (8 字节)</td><td><code>int64</code>, <code>float64</code>, <code>uint64</code>, 指针类型 (<code>*T</code>), <code>string</code>, <code>slice</code>, <code>interface</code></td><td>高 (先放)</td></tr><tr><td>中等 (4 字节)</td><td><code>int32</code>, <code>float32</code>, <code>uint32</code></td><td>中</td></tr><tr><td>最小 (2 字节)</td><td><code>int16</code>, <code>uint16</code></td><td>低</td></tr><tr><td>最小 (1 字节)</td><td><code>bool</code>, <code>int8</code>, <code>uint8</code>, <code>byte</code></td><td>最低 (后放)</td></tr></tbody></table></div><footer class=post-footer><ul class=post-tags><li><a href=https://MU-GONG-SONG.github.io/blog/tags/memory/>Memory</a></li></ul><nav class=paginav><a class=prev href=https://MU-GONG-SONG.github.io/blog/posts/type_assertion/><span class=title>« 上一页</span><br><span>Type Assertion 类型断言</span>
+</a><a class=next href=https://MU-GONG-SONG.github.io/blog/posts/memory_management/><span class=title>下一页 »</span><br><span>你了解内存管理吗??</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://MU-GONG-SONG.github.io/blog/>Q-song | 技术.生活.阅读.思考</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
