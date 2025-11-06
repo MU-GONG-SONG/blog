@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Q-song | 技术.生活.阅读.思考</title>
-    <link>https://MU-GONG-SONG.github.io/blog/</link>
+    <link>https://mugong-song.github.io/blog/</link>
     <description>Recent content on Q-song | 技术.生活.阅读.思考</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>zh</language>
     <lastBuildDate>Mon, 20 Oct 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://MU-GONG-SONG.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mugong-song.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>slice 和 数组</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/slice_01/</link>
+      <link>https://mugong-song.github.io/blog/posts/slice_01/</link>
       <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/slice_01/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/slice_01/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;Go 语言里 slice 和 map 是非常有用的两个内置数据结构，
 线上的工程代码几乎不可能绕开它们。&lt;/p&gt;
@@ -51,9 +51,9 @@
     </item>
     <item>
       <title>SQL_Index 索引</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/sql_index/</link>
+      <link>https://mugong-song.github.io/blog/posts/sql_index/</link>
       <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/sql_index/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/sql_index/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在 Go 后端开发中，我们通常使用 MySQL 或 PostgreSQL 等关系型数据库，索引设计的好坏直接决定了服务接口的响应速度。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -69,9 +69,9 @@
     </item>
     <item>
       <title>Go sheduler 是什么?</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/gmp/</link>
+      <link>https://mugong-song.github.io/blog/posts/gmp/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/gmp/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/gmp/</guid>
       <description>&lt;h3 id=&#34;go-sheduler-是什么&#34;&gt;Go sheduler 是什么?&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Go 程序的执行有两个层面：Go Program 和 Runtime，即用户程序和运行时。它们之间通过函数调用来实现内存管理、channel 通信、goroutine 创建等功能。用户程序进行的系统调用都会被
@@ -94,9 +94,9 @@ Runtime 起始时会启动一些 G：垃圾回收的 G，执行调度的 G，运
     </item>
     <item>
       <title>Type Assertion 类型断言</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/type_assertion/</link>
+      <link>https://mugong-song.github.io/blog/posts/type_assertion/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/type_assertion/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/type_assertion/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;在 Go 语言中，类型断言（Type Assertion） 是一种用于从接口值中提取其底层具体类型的操作。它是 Go 实现多态和类型安全的重要机制之一。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -135,9 +135,9 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
     </item>
     <item>
       <title>内存对齐（memory alignment）</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/</link>
+      <link>https://mugong-song.github.io/blog/posts/memory_alignment/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/memory_alignment/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/memory_alignment/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;看起来很简单，但它其实是 为了内存对齐而存在的。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -215,9 +215,9 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
     </item>
     <item>
       <title>你了解内存管理吗??</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/memory_management/</link>
+      <link>https://mugong-song.github.io/blog/posts/memory_management/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/memory_management/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/memory_management/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;栈分配和堆分配确实都发生在“对象分配器”的分配阶段，
 但它们走的是不同的路径：
@@ -289,9 +289,9 @@ mallocgc 会从当前 P 的 mcache 尝试获取一个合适的 span；
     </item>
     <item>
       <title>什么是“重锁” Heavy Lock?</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/lock/</link>
+      <link>https://mugong-song.github.io/blog/posts/lock/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/lock/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/lock/</guid>
       <description>&lt;h3 id=&#34;1什么是重锁heavy-lock&#34;&gt;1.什么是“重锁”（Heavy Lock）&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;在 Go 性能调优或并发编程中，我们常说的 “重锁”（heavy lock）不是官方术语，而是一个工程上的概念，指的是：锁竞争严重、临界区较大、持锁时间较长的互斥锁（sync.Mutex）。&lt;/p&gt;
@@ -333,9 +333,9 @@ atomic.AddInt64(&amp;amp;count, 1)
     </item>
     <item>
       <title>主键和唯一键？区别是什么？</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/key/</link>
+      <link>https://mugong-song.github.io/blog/posts/key/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/key/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/key/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;主键（Primary Key）是唯一标识每行的非空字段，每表只能有一个；
 唯一键（Unique Key）是保证字段值唯一，但允许为NULL，每表可有多个。&lt;/p&gt;
@@ -390,23 +390,23 @@ atomic.AddInt64(&amp;amp;count, 1)
     </item>
     <item>
       <title>初识 Hugo：打造你的静态博客</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://mugong-song.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Sun, 12 Oct 2025 15:30:00 +0800</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
       <description>介绍 Hugo 的基本概念、安装和创建第一篇文章的流程。</description>
     </item>
     <item>
       <title>About — 关于我</title>
-      <link>https://MU-GONG-SONG.github.io/blog/about/</link>
+      <link>https://mugong-song.github.io/blog/about/</link>
       <pubDate>Sun, 12 Oct 2025 12:00:00 +0800</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/about/</guid>
+      <guid>https://mugong-song.github.io/blog/about/</guid>
       <description>关于我的简单介绍、联系方式和创作理念。</description>
     </item>
     <item>
       <title>垃圾回收机制 Garbage Collection</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/garbage-collection/</link>
+      <link>https://mugong-song.github.io/blog/posts/garbage-collection/</link>
       <pubDate>Sun, 12 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/garbage-collection/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/garbage-collection/</guid>
       <description>&lt;h3 id=&#34;1垃圾回收的认识&#34;&gt;1.垃圾回收的认识&lt;/h3&gt;
 &lt;h3 id=&#34;11垃圾回收是什么有什么作用&#34;&gt;1.1垃圾回收是什么，有什么作用&lt;/h3&gt;
 &lt;p&gt;GC，全称 Garbage Collection，即垃圾回收，是一种自动内存管理的机制。
@@ -448,9 +448,9 @@ GC，也不再需要对内存进行手动的申请和释放操作，GC 在程序
     </item>
     <item>
       <title>我的第一篇博客</title>
-      <link>https://MU-GONG-SONG.github.io/blog/posts/fist-blog/</link>
+      <link>https://mugong-song.github.io/blog/posts/fist-blog/</link>
       <pubDate>Sun, 12 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>https://MU-GONG-SONG.github.io/blog/posts/fist-blog/</guid>
+      <guid>https://mugong-song.github.io/blog/posts/fist-blog/</guid>
       <description>&lt;p&gt;今天开始记录我在 Go 高并发项目中的一些心得体会。&lt;/p&gt;</description>
     </item>
   </channel>
