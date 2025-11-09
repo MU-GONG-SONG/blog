@@ -6,7 +6,7 @@ tags: ["GMP"]
 draft: false
 ---
 
-### Go sheduler 是什么?
+### Go sheduler是什么?
 
 >Go 程序的执行有两个层面：Go Program 和 Runtime，即用户程序和运行时。它们之间通过函数调用来实现内存管理、channel 通信、goroutine 创建等功能。用户程序进行的系统调用都会被
 Runtime 拦截，以此来帮助它进行调度以及垃圾回收相关的工作。
