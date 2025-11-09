@@ -72,7 +72,7 @@
       <link>https://mugong-song.github.io/blog/posts/gmp/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mugong-song.github.io/blog/posts/gmp/</guid>
-      <description>&lt;h3 id=&#34;go-sheduler-是什么&#34;&gt;Go sheduler 是什么?&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;go-sheduler是什么&#34;&gt;Go sheduler是什么?&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Go 程序的执行有两个层面：Go Program 和 Runtime，即用户程序和运行时。它们之间通过函数调用来实现内存管理、channel 通信、goroutine 创建等功能。用户程序进行的系统调用都会被
 Runtime 拦截，以此来帮助它进行调度以及垃圾回收相关的工作。&lt;/p&gt;
