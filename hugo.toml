@@ -1,5 +1,5 @@
 # hugo.toml 示例
-baseURL = "https://MU-GONG-SONG.github.io/blog/"
+baseURL = "https://mugong-song.github.io/blog/"
 publishDir = "public"   # Hugo 构建输出目录
 title = "Q-song | 技术.生活.阅读.思考"
 theme = "PaperMod"
@@ -46,6 +46,9 @@ weight = 50
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
+section = ["HTML"]
+taxonomy = ["HTML"]
+term = ["HTML"]
 
 [params]
 env = "production"
@@ -58,6 +61,17 @@ ShowPostNavLinks = true
 ShowBreadCrumbs = false
 ShowCodeCopyButtons = true
 ShowToc = true
+mainSections = ["posts"]
+
+[params.fuseOpts]
+keys = [
+  {name = "title", weight = 0.8},
+  {name = "summary", weight = 0.4},
+  {name = "content", weight = 0.2},
+  {name = "permalink", weight = 0.1}
+]
+limit = 50
+threshold = 0.3
 
 [params.homeInfoParams]
 Title = "悟已往之不谏，知来者之可追"
@@ -70,7 +84,7 @@ Content = """
 # socialIcons 数组表格
 [[params.socialIcons]]
 name = "Github"
-url = "https://github.com/MU-GONG-SONG"
+url = "https://github.com/mugong-song"
 
 [[params.socialIcons]]
 name = "RSS"
