@@ -41,6 +41,9 @@
     <loc>https://mugong-song.github.io/blog/tags/assertion/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://mugong-song.github.io/blog/tags/db/</loc>
+    <lastmod>2025-10-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://mugong-song.github.io/blog/categories/gmp/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
@@ -62,6 +65,12 @@
     <loc>https://mugong-song.github.io/blog/tags/memory/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://mugong-song.github.io/blog/categories/redis/</loc>
+    <lastmod>2025-10-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mugong-song.github.io/blog/tags/redis/</loc>
+    <lastmod>2025-10-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://mugong-song.github.io/blog/posts/type_assertion/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
@@ -77,6 +86,9 @@
     <loc>https://mugong-song.github.io/blog/posts/memory_management/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://mugong-song.github.io/blog/posts/redis_db_consitent/</loc>
+    <lastmod>2025-10-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://mugong-song.github.io/blog/posts/lock/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
@@ -86,10 +98,10 @@
     <loc>https://mugong-song.github.io/blog/posts/key/</loc>
     <lastmod>2025-10-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mugong-song.github.io/blog/tags/hugo/</loc>
+    <loc>https://mugong-song.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
-    <loc>https://mugong-song.github.io/blog/posts/%E5%88%9D%E8%AF%86-hugo%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://mugong-song.github.io/blog/tags/hugo/</loc>
     <lastmod>2025-10-12T16:00:00+08:00</lastmod>
   </url><url>
     <loc>https://mugong-song.github.io/blog/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/</loc>
@@ -108,9 +120,6 @@
     <lastmod>2025-10-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mugong-song.github.io/blog/tags/gin/</loc>
-    <lastmod>2025-10-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mugong-song.github.io/blog/tags/redis/</loc>
     <lastmod>2025-10-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mugong-song.github.io/blog/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/</loc>
