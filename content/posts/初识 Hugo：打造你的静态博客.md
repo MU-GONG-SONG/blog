@@ -1,5 +1,5 @@
 ---
-title: "初识 Hugo：打造你的静态博客"
+title: "First Encounter with Hugo"
 date: 2025-10-12T15:30:00+08:00
 lastmod: 2025-10-12T16:00:00+08:00
 author: "Beeta"
