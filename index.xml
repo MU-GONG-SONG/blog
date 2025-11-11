@@ -292,7 +292,7 @@ mallocgc 会从当前 P 的 mcache 尝试获取一个合适的 span；
       <link>https://mugong-song.github.io/blog/posts/redis_db_consitent/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mugong-song.github.io/blog/posts/redis_db_consitent/</guid>
-      <description>&lt;h3 id=&#34;1为什么会不一致&#34;&gt;1.为什么会不一致？&lt;/h3&gt;
+      <description>&lt;h3 id=&#34;1为什么会不一致-&#34;&gt;1.为什么会不一致 ？&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Redis 是缓存层，数据库是持久层。
 二者数据可能不一致的原因包括：
 更新数据库成功，但更新缓存失败；
