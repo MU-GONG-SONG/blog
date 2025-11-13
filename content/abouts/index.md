@@ -28,7 +28,7 @@ layout: "page"
 
 - **职业**：软件工程师  / 后端
 - **所在地**：中国🇨🇳
-- **擅长**：Go、Docker、Kubernetes、Redis等等
+- **擅长**：Go/Docker/Kubernetes/Redis/RabbitMQ/Kafka...
 - **邮箱**：tomsfamily01@gmail.com
 
 ---
