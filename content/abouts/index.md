@@ -26,10 +26,10 @@ layout: "page"
 
 ## ⚡️ 速览
 
-- **职业**：软件工程师 / 前端 / 后端（根据实际修改）
-- **所在地**：城市，国家
-- **擅长**：Go、Docker、Kubernetes、Hugo
-- **邮箱**：1293589405@qq.com（请替换）
+- **职业**：软件工程师  / 后端
+- **所在地**：中国🇨🇳
+- **擅长**：Go、Docker、Kubernetes、Redis等等
+- **邮箱**：tomsfamily01@gmail.com
 
 ---
 
@@ -48,15 +48,12 @@ layout: "page"
 - **项目 A** — [GitHub 链接](https://github.com/yourusername/projectA)：简短说明
 - **项目 B** — [GitHub 链接](https://github.com/yourusername/projectB)：简短说明
 
-（你可以在这里列出想展示的作品或文章）
-
 ---
 
 ## 📫 联系我
 
-- 📧 邮箱：you@example.com
-- 🐙 GitHub：[yourusername](https://github.com/yourusername)
-- 🐦 Twitter：[yourhandle](https://twitter.com/yourhandle)
+- 📧 邮箱：tomsfamily01@gmail.com
+- 🐙 GitHub：[mugong-song](https://github.com/mugong-song)
 
 ---
 
