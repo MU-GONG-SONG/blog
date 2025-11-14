@@ -2,7 +2,7 @@
 title: "SQL_Index 索引"
 date: 2025-10-20
 categories: ["SQL"]
-tags: ["命中", "失效"]
+tags: ["索引"]
 draft: false
 ---
 
