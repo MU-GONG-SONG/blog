@@ -364,50 +364,32 @@ mallocgc 会从当前 P 的 mcache 尝试获取一个合适的 span；
 并发写操作覆盖（顺序问题）；
 异步更新延迟。
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2更新策略&#34;&gt;2.更新策略&lt;/h3&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;策略&lt;/th&gt;
-          &lt;th&gt;描述&lt;/th&gt;
-          &lt;th&gt;优点&lt;/th&gt;
-          &lt;th&gt;缺点&lt;/th&gt;
-          &lt;th&gt;一致性表现&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;&lt;strong&gt;Cache Aside（旁路缓存）&lt;/strong&gt;&lt;/td&gt;
-          &lt;td&gt;读操作&lt;br/&gt;1. 读缓存 &lt;br/&gt;2. 如果缓存不存在 ,再读数据库 &lt;br/&gt;3. 将数据写入缓存（设置过期时间）&lt;br/&gt;写操作: 先更新数据库 ,再删除缓存&lt;/td&gt;
-          &lt;td&gt;常用、简单&lt;/td&gt;
-          &lt;td&gt;删除缓存可能失败；删除顺序不当会不一致&lt;/td&gt;
-          &lt;td&gt;中等&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;&lt;strong&gt;Read/Write Through（读写穿透）&lt;/strong&gt;&lt;/td&gt;
-          &lt;td&gt;应用不直接访问DB，所有读写都经由缓存代理完成&lt;/td&gt;
-          &lt;td&gt;一致性好&lt;/td&gt;
-          &lt;td&gt;实现复杂，性能略低&lt;/td&gt;
-          &lt;td&gt;较高&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;&lt;strong&gt;Write Behind（异步写回）&lt;/strong&gt;&lt;/td&gt;
-          &lt;td&gt;只写缓存，由缓存异步刷回数据库&lt;/td&gt;
-          &lt;td&gt;性能高&lt;/td&gt;
-          &lt;td&gt;容易丢数据&lt;/td&gt;
-          &lt;td&gt;差&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;3处理并发问题&#34;&gt;3.处理并发问题&lt;/h3&gt;
+&lt;h4 id=&#34;21-cache-aside旁路缓存&#34;&gt;2.1 Cache Aside（旁路缓存）&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;读操作
+1. 读缓存
+2. 如果缓存不存在 ,再读数据库
+3. 将数据写入缓存（设置过期时间）
+写操作: 先更新数据库 ,再删除缓存
+
+缺点:删除缓存可能失败；删除顺序不当会不一致
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;22-readwrite-through读写穿透&#34;&gt;2.2 Read/Write Through（读写穿透）&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;应用不直接访问DB，所有读写都经由缓存代理完成
+
+缺点:实现复杂，性能略低	
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;23-write-behind异步写回&#34;&gt;2.3 Write Behind（异步写回）&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;只写缓存，由缓存异步刷回数据库	
+
+缺点:容易丢数据	
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;3处理并发问题&#34;&gt;3.处理并发问题&lt;/h3&gt;
 &lt;h4 id=&#34;31延迟双删策略double-delete&#34;&gt;3.1延迟双删策略（Double Delete）&lt;/h4&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1. 更新数据库；
 2. 删除缓存；
 3. 延迟 500ms 再删一次缓存。
 //可以应对并发中缓存被“脏写”回的情况。
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;32异步消息队列mq&#34;&gt;3.2异步消息队列（MQ）&lt;/h4&gt;
-&lt;p&gt;数据更新时发送 MQ 消息，异步同步缓存状态。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数据更新时发送 MQ 消息，异步同步缓存状态。&lt;/strong&gt;&lt;/p&gt;
 &lt;h4 id=&#34;33分布式锁&#34;&gt;3.3分布式锁&lt;/h4&gt;
-&lt;p&gt;保证更新操作串行执行，避免交叉覆盖。&lt;/p&gt;</description>
+&lt;p&gt;&lt;strong&gt;保证更新操作串行执行，避免交叉覆盖。&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>什么是“重锁” Heavy Lock?</title>

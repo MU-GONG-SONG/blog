@@ -6,40 +6,22 @@ Redis 是缓存层，数据库是持久层。
 并发写操作覆盖（顺序问题）；
 异步更新延迟。
 2.更新策略
+2.1 Cache Aside（旁路缓存）
+读操作
+1. 读缓存
+2. 如果缓存不存在 ,再读数据库
+3. 将数据写入缓存（设置过期时间）
+写操作: 先更新数据库 ,再删除缓存
 
-  
-      
-          策略
-          描述
-          优点
-          缺点
-          一致性表现
-      
-  
-  
-      
-          Cache Aside（旁路缓存）
-          读操作1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间）写操作: 先更新数据库 ,再删除缓存
-          常用、简单
-          删除缓存可能失败；删除顺序不当会不一致
-          中等
-      
-      
-          Read/Write Through（读写穿透）
-          应用不直接访问DB，所有读写都经由缓存代理完成
-          一致性好
-          实现复杂，性能略低
-          较高
-      
-      
-          Write Behind（异步写回）
-          只写缓存，由缓存异步刷回数据库
-          性能高
-          容易丢数据
-          差
-      
-  
+缺点:删除缓存可能失败；删除顺序不当会不一致
+2.2 Read/Write Through（读写穿透）
+应用不直接访问DB，所有读写都经由缓存代理完成
 
+缺点:实现复杂，性能略低	
+2.3 Write Behind（异步写回）
+只写缓存，由缓存异步刷回数据库	
+
+缺点:容易丢数据	
 3.处理并发问题
 3.1延迟双删策略（Double Delete）
 1. 更新数据库；
@@ -49,7 +31,7 @@ Redis 是缓存层，数据库是持久层。
 3.2异步消息队列（MQ）
 数据更新时发送 MQ 消息，异步同步缓存状态。
 3.3分布式锁
-保证更新操作串行执行，避免交叉覆盖。"><meta name=author content="Mumu"><link rel=canonical href=https://mugong-song.github.io/blog/posts/redis_db_consitent/><link crossorigin=anonymous href=/blog/assets/css/stylesheet.a090830a421002426baafbd314e38f149d77b4c48a12ee9312700d770b27fb26.css integrity="sha256-oJCDCkIQAkJrqvvTFOOPFJ13tMSKEu6TEnANdwsn+yY=" rel="preload stylesheet" as=style><link rel=icon href=https://mugong-song.github.io/blog/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://mugong-song.github.io/blog/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://mugong-song.github.io/blog/favicon-32x32.png><link rel=apple-touch-icon href=https://mugong-song.github.io/blog/apple-touch-icon.png><link rel=mask-icon href=https://mugong-song.github.io/blog/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://mugong-song.github.io/blog/posts/redis_db_consitent/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script async src="https://www.googletagmanager.com/gtag/js?id=G-MZJS5SGFET"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-MZJS5SGFET")}</script><meta property="og:url" content="https://mugong-song.github.io/blog/posts/redis_db_consitent/"><meta property="og:site_name" content="Q-song | 技术.生活.阅读.思考"><meta property="og:title" content="如何保证 Redis 与数据库的数据一致性?"><meta property="og:description" content="1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 策略 描述 优点 缺点 一致性表现 Cache Aside（旁路缓存） 读操作1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间）写操作: 先更新数据库 ,再删除缓存 常用、简单 删除缓存可能失败；删除顺序不当会不一致 中等 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 一致性好 实现复杂，性能略低 较高 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库 性能高 容易丢数据 差 3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。
+保证更新操作串行执行，避免交叉覆盖。"><meta name=author content="Mumu"><link rel=canonical href=https://mugong-song.github.io/blog/posts/redis_db_consitent/><link crossorigin=anonymous href=/blog/assets/css/stylesheet.a090830a421002426baafbd314e38f149d77b4c48a12ee9312700d770b27fb26.css integrity="sha256-oJCDCkIQAkJrqvvTFOOPFJ13tMSKEu6TEnANdwsn+yY=" rel="preload stylesheet" as=style><link rel=icon href=https://mugong-song.github.io/blog/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://mugong-song.github.io/blog/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://mugong-song.github.io/blog/favicon-32x32.png><link rel=apple-touch-icon href=https://mugong-song.github.io/blog/apple-touch-icon.png><link rel=mask-icon href=https://mugong-song.github.io/blog/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=zh href=https://mugong-song.github.io/blog/posts/redis_db_consitent/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script async src="https://www.googletagmanager.com/gtag/js?id=G-MZJS5SGFET"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-MZJS5SGFET")}</script><meta property="og:url" content="https://mugong-song.github.io/blog/posts/redis_db_consitent/"><meta property="og:site_name" content="Q-song | 技术.生活.阅读.思考"><meta property="og:title" content="如何保证 Redis 与数据库的数据一致性?"><meta property="og:description" content="1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 2.1 Cache Aside（旁路缓存） 读操作 1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间） 写操作: 先更新数据库 ,再删除缓存 缺点:删除缓存可能失败；删除顺序不当会不一致 2.2 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 缺点:实现复杂，性能略低	2.3 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库	缺点:容易丢数据	3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。
 3.3分布式锁 保证更新操作串行执行，避免交叉覆盖。"><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-10-14T00:00:00+00:00"><meta property="article:modified_time" content="2025-10-14T00:00:00+00:00"><meta property="article:tag" content="Redis"><meta property="article:tag" content="DB"><meta name=twitter:card content="summary"><meta name=twitter:title content="如何保证 Redis 与数据库的数据一致性?"><meta name=twitter:description content="1.为什么会不一致 ？
 Redis 是缓存层，数据库是持久层。
 二者数据可能不一致的原因包括：
@@ -58,40 +40,22 @@ Redis 是缓存层，数据库是持久层。
 并发写操作覆盖（顺序问题）；
 异步更新延迟。
 2.更新策略
+2.1 Cache Aside（旁路缓存）
+读操作
+1. 读缓存
+2. 如果缓存不存在 ,再读数据库
+3. 将数据写入缓存（设置过期时间）
+写操作: 先更新数据库 ,再删除缓存
 
-  
-      
-          策略
-          描述
-          优点
-          缺点
-          一致性表现
-      
-  
-  
-      
-          Cache Aside（旁路缓存）
-          读操作1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间）写操作: 先更新数据库 ,再删除缓存
-          常用、简单
-          删除缓存可能失败；删除顺序不当会不一致
-          中等
-      
-      
-          Read/Write Through（读写穿透）
-          应用不直接访问DB，所有读写都经由缓存代理完成
-          一致性好
-          实现复杂，性能略低
-          较高
-      
-      
-          Write Behind（异步写回）
-          只写缓存，由缓存异步刷回数据库
-          性能高
-          容易丢数据
-          差
-      
-  
+缺点:删除缓存可能失败；删除顺序不当会不一致
+2.2 Read/Write Through（读写穿透）
+应用不直接访问DB，所有读写都经由缓存代理完成
 
+缺点:实现复杂，性能略低	
+2.3 Write Behind（异步写回）
+只写缓存，由缓存异步刷回数据库	
+
+缺点:容易丢数据	
 3.处理并发问题
 3.1延迟双删策略（Double Delete）
 1. 更新数据库；
@@ -101,19 +65,32 @@ Redis 是缓存层，数据库是持久层。
 3.2异步消息队列（MQ）
 数据更新时发送 MQ 消息，异步同步缓存状态。
 3.3分布式锁
-保证更新操作串行执行，避免交叉覆盖。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://mugong-song.github.io/blog/posts/"},{"@type":"ListItem","position":2,"name":"如何保证 Redis 与数据库的数据一致性?","item":"https://mugong-song.github.io/blog/posts/redis_db_consitent/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何保证 Redis 与数据库的数据一致性?","name":"如何保证 Redis 与数据库的数据一致性?","description":"1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 策略 描述 优点 缺点 一致性表现 Cache Aside（旁路缓存） 读操作1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间）写操作: 先更新数据库 ,再删除缓存 常用、简单 删除缓存可能失败；删除顺序不当会不一致 中等 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 一致性好 实现复杂，性能略低 较高 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库 性能高 容易丢数据 差 3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。\n3.3分布式锁 保证更新操作串行执行，避免交叉覆盖。\n","keywords":["Redis","DB"],"articleBody":"1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 策略 描述 优点 缺点 一致性表现 Cache Aside（旁路缓存） 读操作1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间）写操作: 先更新数据库 ,再删除缓存 常用、简单 删除缓存可能失败；删除顺序不当会不一致 中等 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 一致性好 实现复杂，性能略低 较高 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库 性能高 容易丢数据 差 3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。\n3.3分布式锁 保证更新操作串行执行，避免交叉覆盖。\n","wordCount":"59","inLanguage":"zh","datePublished":"2025-10-14T00:00:00Z","dateModified":"2025-10-14T00:00:00Z","author":{"@type":"Person","name":"Mumu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://mugong-song.github.io/blog/posts/redis_db_consitent/"},"publisher":{"@type":"Organization","name":"Q-song | 技术.生活.阅读.思考","logo":{"@type":"ImageObject","url":"https://mugong-song.github.io/blog/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://mugong-song.github.io/blog/ accesskey=h title="Q-song (Alt + H)"><img src=https://mugong-song.github.io/blog/img/%E8%B6%B3%E8%BF%B9.png alt aria-label=logo height=35>Q-song</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+保证更新操作串行执行，避免交叉覆盖。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://mugong-song.github.io/blog/posts/"},{"@type":"ListItem","position":2,"name":"如何保证 Redis 与数据库的数据一致性?","item":"https://mugong-song.github.io/blog/posts/redis_db_consitent/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何保证 Redis 与数据库的数据一致性?","name":"如何保证 Redis 与数据库的数据一致性?","description":"1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 2.1 Cache Aside（旁路缓存） 读操作 1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间） 写操作: 先更新数据库 ,再删除缓存 缺点:删除缓存可能失败；删除顺序不当会不一致 2.2 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 缺点:实现复杂，性能略低\t2.3 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库\t缺点:容易丢数据\t3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。\n3.3分布式锁 保证更新操作串行执行，避免交叉覆盖。\n","keywords":["Redis","DB"],"articleBody":"1.为什么会不一致 ？ Redis 是缓存层，数据库是持久层。 二者数据可能不一致的原因包括： 更新数据库成功，但更新缓存失败； 缓存提前过期； 并发写操作覆盖（顺序问题）； 异步更新延迟。 2.更新策略 2.1 Cache Aside（旁路缓存） 读操作 1. 读缓存 2. 如果缓存不存在 ,再读数据库 3. 将数据写入缓存（设置过期时间） 写操作: 先更新数据库 ,再删除缓存 缺点:删除缓存可能失败；删除顺序不当会不一致 2.2 Read/Write Through（读写穿透） 应用不直接访问DB，所有读写都经由缓存代理完成 缺点:实现复杂，性能略低\t2.3 Write Behind（异步写回） 只写缓存，由缓存异步刷回数据库\t缺点:容易丢数据\t3.处理并发问题 3.1延迟双删策略（Double Delete） 1. 更新数据库； 2. 删除缓存； 3. 延迟 500ms 再删一次缓存。 //可以应对并发中缓存被“脏写”回的情况。 3.2异步消息队列（MQ） 数据更新时发送 MQ 消息，异步同步缓存状态。\n3.3分布式锁 保证更新操作串行执行，避免交叉覆盖。\n","wordCount":"53","inLanguage":"zh","datePublished":"2025-10-14T00:00:00Z","dateModified":"2025-10-14T00:00:00Z","author":{"@type":"Person","name":"Mumu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://mugong-song.github.io/blog/posts/redis_db_consitent/"},"publisher":{"@type":"Organization","name":"Q-song | 技术.生活.阅读.思考","logo":{"@type":"ImageObject","url":"https://mugong-song.github.io/blog/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://mugong-song.github.io/blog/ accesskey=h title="Q-song (Alt + H)"><img src=https://mugong-song.github.io/blog/img/%E8%B6%B3%E8%BF%B9.png alt aria-label=logo height=35>Q-song</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
 <svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://mugong-song.github.io/blog/search/ title="🔎 搜索"><span>🔎 搜索</span></a></li><li><a href=https://mugong-song.github.io/blog/archives title="⏱️ 时间轴"><span>⏱️ 时间轴</span></a></li><li><a href=https://mugong-song.github.io/blog/categories/ title="⛩️ 分类"><span>⛩️ 分类</span></a></li><li><a href=https://mugong-song.github.io/blog/tags/ title="🧩 标签"><span>🧩 标签</span></a></li><li><a href=https://mugong-song.github.io/blog/about title="🙋🏻‍♂️ 关于"><span>🙋🏻‍♂️ 关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">如何保证 Redis 与数据库的数据一致性?</h1><div class=post-meta><span title='2025-10-14 00:00:00 +0000 UTC'>2025年10月14日</span>&nbsp;·&nbsp;<span>Mumu</span></div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>目录</span></summary><div class=inner><ul><li><a href=#1%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bc%9a%e4%b8%8d%e4%b8%80%e8%87%b4- aria-label="1.为什么会不一致 ？">1.为什么会不一致 ？</a></li><li><a href=#2%e6%9b%b4%e6%96%b0%e7%ad%96%e7%95%a5 aria-label=2.更新策略>2.更新策略</a></li><li><a href=#3%e5%a4%84%e7%90%86%e5%b9%b6%e5%8f%91%e9%97%ae%e9%a2%98 aria-label=3.处理并发问题>3.处理并发问题</a><ul><li><a href=#31%e5%bb%b6%e8%bf%9f%e5%8f%8c%e5%88%a0%e7%ad%96%e7%95%a5double-delete aria-label="3.1延迟双删策略（Double Delete）">3.1延迟双删策略（Double Delete）</a></li><li><a href=#32%e5%bc%82%e6%ad%a5%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97mq aria-label=3.2异步消息队列（MQ）>3.2异步消息队列（MQ）</a></li><li><a href=#33%e5%88%86%e5%b8%83%e5%bc%8f%e9%94%81 aria-label=3.3分布式锁>3.3分布式锁</a></li></ul></li></ul></div></details></div><div class=post-content><h3 id=1为什么会不一致->1.为什么会不一致 ？<a hidden class=anchor aria-hidden=true href=#1为什么会不一致->#</a></h3><pre tabindex=0><code>Redis 是缓存层，数据库是持久层。
+<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://mugong-song.github.io/blog/search/ title="🔎 搜索"><span>🔎 搜索</span></a></li><li><a href=https://mugong-song.github.io/blog/archives title="⏱️ 时间轴"><span>⏱️ 时间轴</span></a></li><li><a href=https://mugong-song.github.io/blog/categories/ title="⛩️ 分类"><span>⛩️ 分类</span></a></li><li><a href=https://mugong-song.github.io/blog/tags/ title="🧩 标签"><span>🧩 标签</span></a></li><li><a href=https://mugong-song.github.io/blog/about title="🙋🏻‍♂️ 关于"><span>🙋🏻‍♂️ 关于</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">如何保证 Redis 与数据库的数据一致性?</h1><div class=post-meta><span title='2025-10-14 00:00:00 +0000 UTC'>2025年10月14日</span>&nbsp;·&nbsp;<span>Mumu</span></div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>目录</span></summary><div class=inner><ul><li><a href=#1%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bc%9a%e4%b8%8d%e4%b8%80%e8%87%b4- aria-label="1.为什么会不一致 ？">1.为什么会不一致 ？</a></li><li><a href=#2%e6%9b%b4%e6%96%b0%e7%ad%96%e7%95%a5 aria-label=2.更新策略>2.更新策略</a><ul><li><a href=#21-cache-aside%e6%97%81%e8%b7%af%e7%bc%93%e5%ad%98 aria-label="2.1 Cache Aside（旁路缓存）">2.1 Cache Aside（旁路缓存）</a></li><li><a href=#22-readwrite-through%e8%af%bb%e5%86%99%e7%a9%bf%e9%80%8f aria-label="2.2 Read/Write Through（读写穿透）">2.2 Read/Write Through（读写穿透）</a></li><li><a href=#23-write-behind%e5%bc%82%e6%ad%a5%e5%86%99%e5%9b%9e aria-label="2.3 Write Behind（异步写回）">2.3 Write Behind（异步写回）</a></li></ul></li><li><a href=#3%e5%a4%84%e7%90%86%e5%b9%b6%e5%8f%91%e9%97%ae%e9%a2%98 aria-label=3.处理并发问题>3.处理并发问题</a><ul><li><a href=#31%e5%bb%b6%e8%bf%9f%e5%8f%8c%e5%88%a0%e7%ad%96%e7%95%a5double-delete aria-label="3.1延迟双删策略（Double Delete）">3.1延迟双删策略（Double Delete）</a></li><li><a href=#32%e5%bc%82%e6%ad%a5%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97mq aria-label=3.2异步消息队列（MQ）>3.2异步消息队列（MQ）</a></li><li><a href=#33%e5%88%86%e5%b8%83%e5%bc%8f%e9%94%81 aria-label=3.3分布式锁>3.3分布式锁</a></li></ul></li></ul></div></details></div><div class=post-content><h3 id=1为什么会不一致->1.为什么会不一致 ？<a hidden class=anchor aria-hidden=true href=#1为什么会不一致->#</a></h3><pre tabindex=0><code>Redis 是缓存层，数据库是持久层。
 二者数据可能不一致的原因包括：
 更新数据库成功，但更新缓存失败；
 缓存提前过期；
 并发写操作覆盖（顺序问题）；
 异步更新延迟。
-</code></pre><h3 id=2更新策略>2.更新策略<a hidden class=anchor aria-hidden=true href=#2更新策略>#</a></h3><table><thead><tr><th>策略</th><th>描述</th><th>优点</th><th>缺点</th><th>一致性表现</th></tr></thead><tbody><tr><td><strong>Cache Aside（旁路缓存）</strong></td><td>读操作<br>1. 读缓存<br>2. 如果缓存不存在 ,再读数据库<br>3. 将数据写入缓存（设置过期时间）<br>写操作: 先更新数据库 ,再删除缓存</td><td>常用、简单</td><td>删除缓存可能失败；删除顺序不当会不一致</td><td>中等</td></tr><tr><td><strong>Read/Write Through（读写穿透）</strong></td><td>应用不直接访问DB，所有读写都经由缓存代理完成</td><td>一致性好</td><td>实现复杂，性能略低</td><td>较高</td></tr><tr><td><strong>Write Behind（异步写回）</strong></td><td>只写缓存，由缓存异步刷回数据库</td><td>性能高</td><td>容易丢数据</td><td>差</td></tr></tbody></table><h3 id=3处理并发问题>3.处理并发问题<a hidden class=anchor aria-hidden=true href=#3处理并发问题>#</a></h3><h4 id=31延迟双删策略double-delete>3.1延迟双删策略（Double Delete）<a hidden class=anchor aria-hidden=true href=#31延迟双删策略double-delete>#</a></h4><pre tabindex=0><code>1. 更新数据库；
+</code></pre><h3 id=2更新策略>2.更新策略<a hidden class=anchor aria-hidden=true href=#2更新策略>#</a></h3><h4 id=21-cache-aside旁路缓存>2.1 Cache Aside（旁路缓存）<a hidden class=anchor aria-hidden=true href=#21-cache-aside旁路缓存>#</a></h4><pre tabindex=0><code>读操作
+1. 读缓存
+2. 如果缓存不存在 ,再读数据库
+3. 将数据写入缓存（设置过期时间）
+写操作: 先更新数据库 ,再删除缓存
+
+缺点:删除缓存可能失败；删除顺序不当会不一致
+</code></pre><h4 id=22-readwrite-through读写穿透>2.2 Read/Write Through（读写穿透）<a hidden class=anchor aria-hidden=true href=#22-readwrite-through读写穿透>#</a></h4><pre tabindex=0><code>应用不直接访问DB，所有读写都经由缓存代理完成
+
+缺点:实现复杂，性能略低	
+</code></pre><h4 id=23-write-behind异步写回>2.3 Write Behind（异步写回）<a hidden class=anchor aria-hidden=true href=#23-write-behind异步写回>#</a></h4><pre tabindex=0><code>只写缓存，由缓存异步刷回数据库	
+
+缺点:容易丢数据	
+</code></pre><h3 id=3处理并发问题>3.处理并发问题<a hidden class=anchor aria-hidden=true href=#3处理并发问题>#</a></h3><h4 id=31延迟双删策略double-delete>3.1延迟双删策略（Double Delete）<a hidden class=anchor aria-hidden=true href=#31延迟双删策略double-delete>#</a></h4><pre tabindex=0><code>1. 更新数据库；
 2. 删除缓存；
 3. 延迟 500ms 再删一次缓存。
 //可以应对并发中缓存被“脏写”回的情况。
-</code></pre><h4 id=32异步消息队列mq>3.2异步消息队列（MQ）<a hidden class=anchor aria-hidden=true href=#32异步消息队列mq>#</a></h4><p>数据更新时发送 MQ 消息，异步同步缓存状态。</p><h4 id=33分布式锁>3.3分布式锁<a hidden class=anchor aria-hidden=true href=#33分布式锁>#</a></h4><p>保证更新操作串行执行，避免交叉覆盖。</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://mugong-song.github.io/blog/tags/redis/>Redis</a></li><li><a href=https://mugong-song.github.io/blog/tags/db/>DB</a></li></ul><nav class=paginav><a class=prev href=https://mugong-song.github.io/blog/posts/memory_management/><span class=title>« 上一页</span><br><span>你了解内存管理吗?</span>
+</code></pre><h4 id=32异步消息队列mq>3.2异步消息队列（MQ）<a hidden class=anchor aria-hidden=true href=#32异步消息队列mq>#</a></h4><p><strong>数据更新时发送 MQ 消息，异步同步缓存状态。</strong></p><h4 id=33分布式锁>3.3分布式锁<a hidden class=anchor aria-hidden=true href=#33分布式锁>#</a></h4><p><strong>保证更新操作串行执行，避免交叉覆盖。</strong></p></div><footer class=post-footer><ul class=post-tags><li><a href=https://mugong-song.github.io/blog/tags/redis/>Redis</a></li><li><a href=https://mugong-song.github.io/blog/tags/db/>DB</a></li></ul><nav class=paginav><a class=prev href=https://mugong-song.github.io/blog/posts/memory_management/><span class=title>« 上一页</span><br><span>你了解内存管理吗?</span>
 </a><a class=next href=https://mugong-song.github.io/blog/posts/lock/><span class=title>下一页 »</span><br><span>什么是“重锁” Heavy Lock?</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://mugong-song.github.io/blog/>Q-song | 技术.生活.阅读.思考</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
