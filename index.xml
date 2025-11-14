@@ -260,8 +260,8 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
 向操作系统申请一大块虚拟内存（称为 arena）；
 由 页分配器（page allocator） 管理这块内存；
 构建堆内存管理结构（mheap、mcentral、mcache）。
-&amp;gt; 这部分只是“预留”内存，真正的对象分配还没发生。
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2用户程序触发分配对象分配阶段&#34;&gt;2.用户程序触发分配（对象分配阶段）&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;这部分只是“预留”内存，真正的对象分配还没发生。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2用户程序触发分配对象分配阶段&#34;&gt;2.用户程序触发分配（对象分配阶段）&lt;/h3&gt;
 &lt;p&gt;当用户代码中创建变量时，比如：&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;x := MyStruct{}
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;编译器会在编译阶段决定这个对象是：
