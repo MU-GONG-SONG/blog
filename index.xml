@@ -93,6 +93,30 @@ Runtime 起始时会启动一些 G：垃圾回收的 G，执行调度的 G，运
 上了 P 结构体。每个 P 维护一个处于 Runnable 状态的 G 的队列，解决了原来的全局锁问题。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Kafka的rebalance?什么情况下会出现?</title>
+      <link>https://mugong-song.github.io/blog/posts/kafka_rebalance/</link>
+      <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://mugong-song.github.io/blog/posts/kafka_rebalance/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Kafka 的 Rebalance (重平衡) 是 Consumer Group (消费者组) 中的一个核心机制，它用于在 Consumer Group 内部重新分配 Topic 的分区（Partition）所有权。
+Rebalance 确保了在集群运行过程中，Consumer Group 里的所有消费者能均匀、独占地消费所有相关的分区。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;1什么是-rebalance-重平衡&#34;&gt;1.什么是 Rebalance (重平衡)？&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;在 Kafka 中，一个 Consumer Group 消费一个或多个 Topic。每个分区在同一时刻只能被 Consumer Group 内的一个 Consumer 实例消费。
+Rebalance 就是 Consumer Group 内部达成一致，确定“谁”来消费“哪个”分区的过程。
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;11-核心目标&#34;&gt;1.1 核心目标&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;负载均衡：将分区均匀地分配给组内所有健康的 Consumer 实例。
+高可用性：当有 Consumer 实例失败或退出时，Rebalance 机制会将它之前负责的分区重新分配给组内其他Consumer，确保消费不会中断。
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;12-rebalance-的过程&#34;&gt;1.2 Rebalance 的过程&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;整个过程由 Consumer Group 的 Coordinator（协调器，通常是某个 Broker） 负责协调：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-Join Group (加入组)：新的 Consumer 加入或旧的 Consumer 重新连接时，会向 Coordinator 发送请求。
+-Sync Group (同步组)：Coordinator 在收到所有 Consumer 的 Join 请求后，会选出一个 Leader Consumer。
+-分配方案：Leader Consumer 负责制定分区到 Consumer 的映射关系（分配策略）。
+-执行分配：Coordinator 将分配方案通知给所有 Consumer，各个 Consumer 按照方案开始消费新分配的分区。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2什么情况下会出现-rebalance&#34;&gt;2.什么情况下会出现 Rebalance？&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;任何导致 Consumer Group 内部成员发生变化或分区信息发生变化的操作，都会触发 Rebalance。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Type Assertion 类型断言</title>
       <link>https://mugong-song.github.io/blog/posts/type_assertion/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
