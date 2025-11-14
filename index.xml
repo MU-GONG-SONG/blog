@@ -245,7 +245,7 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
 &lt;p&gt;总大小32 字节，结构体最大对齐是 8 字节，总大小 32 是 8 的倍数。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>你了解内存管理吗??</title>
+      <title>你了解内存管理吗?</title>
       <link>https://mugong-song.github.io/blog/posts/memory_management/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mugong-song.github.io/blog/posts/memory_management/</guid>
