@@ -369,7 +369,7 @@ mallocgc 会从当前 P 的 mcache 尝试获取一个合适的 span；
 1. 读缓存
 2. 如果缓存不存在 ,再读数据库
 3. 将数据写入缓存（设置过期时间）
-写操作: 先更新数据库 ,再删除缓存
+写操作: 先更新数据库,再删除缓存
 
 缺点:删除缓存可能失败；删除顺序不当会不一致
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;22-readwrite-through读写穿透&#34;&gt;2.2 Read/Write Through（读写穿透）&lt;/h4&gt;
