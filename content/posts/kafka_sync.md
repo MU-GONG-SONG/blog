@@ -1,5 +1,5 @@
 ---
-title: "Kafka如何实现主从同步"
+title: "Kafka如何实现主从同步?"
 date: 2025-10-14
 categories: ["Kafka"]
 tags: ["Kafka","同步"]
