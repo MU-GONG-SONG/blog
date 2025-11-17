@@ -126,7 +126,7 @@ Rebalance 就是 Consumer Group 内部达成一致，确定“谁”来消费“
 &lt;p&gt;&lt;strong&gt;任何导致 Consumer Group 内部成员发生变化或分区信息发生变化的操作，都会触发 Rebalance。&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Kafka如何实现主从同步</title>
+      <title>Kafka如何实现主从同步?</title>
       <link>https://mugong-song.github.io/blog/posts/kafka_sync/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mugong-song.github.io/blog/posts/kafka_sync/</guid>
