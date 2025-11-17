@@ -143,7 +143,8 @@ fmt.Println(len(s))  // 现在可以了&lt;/p&gt;
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mugong-song.github.io/blog/posts/memory_alignment/</guid>
       <description>&lt;blockquote&gt;
-&lt;p&gt;看起来很简单，但它其实是 为了内存对齐而存在的。&lt;/p&gt;
+&lt;p&gt;内存对齐（Memory Alignment）是计算机系统架构和编程中的一个基本概念，它指的是数据在内存中的存储地址必须是某个值的整数倍。这个“某个值”通常是该数据类型的大小或其最大成员的大小（在结构体中）。
+分析以下具体实例解读内存对齐&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type itab struct {
     inter *interfacetype // 接口类型信息
