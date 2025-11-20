@@ -1,6 +1,6 @@
 ---
 title: "你会使用chan吗?"
-date: 2025-10-2
+date: 2025-10-02
 categories: ["chan"]
 tags: ["chan","Go"]
 draft: false
