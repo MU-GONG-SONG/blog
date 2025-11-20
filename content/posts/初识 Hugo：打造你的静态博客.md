@@ -1,7 +1,7 @@
 ---
 title: "First Encounter with Hugo"
-date: 2025-10-12T15:30:00+08:00
-lastmod: 2025-10-12T16:00:00+08:00
+date: 2025-09-01T15:30:00+08:00
+lastmod: 2025-09-01T16:00:00+08:00
 author: "Beeta"
 description: "介绍 Hugo 的基本概念、安装和创建第一篇文章的流程。"
 tags: ["Hugo", "静态网站", "教程"]
