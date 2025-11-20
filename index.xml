@@ -621,5 +621,66 @@ GC，也不再需要对内存进行手动的申请和释放操作，GC 在程序
       <guid>https://mugong-song.github.io/blog/posts/fist-blog/</guid>
       <description>&lt;p&gt;今天开始记录我在 Go 高并发项目中的一些心得体会。&lt;/p&gt;</description>
     </item>
+    <item>
+      <title>你会使用chan吗?</title>
+      <link>https://mugong-song.github.io/blog/posts/chan_usage/</link>
+      <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://mugong-song.github.io/blog/posts/chan_usage/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;chan 是 Go 语言并发编程中最核心的概念之一，它是 Channel（通道） 类型的关键字缩写。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Channel 的设计理念源于通信顺序进程（CSP, Communicating Sequential Processes），它提供了一种安全、同步的方式，让不同的 Goroutine（并发执行的“工人”）之间可以进行通信和数据交换。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;1什么是-chan-通道&#34;&gt;1.什么是 chan (通道)？&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Channel 可以被理解为一个管道或队列，它具有以下核心特性：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;类型安全： Channel 只能传输它在创建时指定的特定类型的数据。
+例如：chan int 只能传输 int 整数。
+同步机制： Channel 默认会阻塞发送和接收操作，直到另一端准备好。
+并发安全： Go 运行时保证了对 Channel 的发送和接收操作是线程安全的，无需额外的锁（sync.Mutex）。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2chan-怎么使用&#34;&gt;2.chan 怎么使用？&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;使用 Channel 主要分为三个步骤：创建、发送、接收。&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;21-创建-channel&#34;&gt;2.1 创建 Channel&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;使用 make 函数创建 Channel。&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;//无缓冲通道 (Unbuffered)
+ch := make(chan Type)
+//容量为 0。发送和接收操作必须同时准备好，否则先执行的操作会一直阻塞，直到另一个操作发生。用于严格的同步。
+
+ch := make(chan Type, N)
+//有缓冲通道 (Buffered)
+//容量为 N。通道可以存储 N个元素。只有当通道满了（发送）或空了（接收）时，操作才会阻塞。用于解耦和提高吞吐量。
+
+dataCh := make(chan string)       // 无缓冲，用于同步信号
+taskCh := make(chan int, 10)      // 有缓冲，容量为 10，用于传输任务
+&lt;/code&gt;&lt;/pre&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;类型&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;语法&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;目的&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;切片&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;make([]Type, length, capacity)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;分配底层数组，设置切片的长度和容量。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;映射&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;make(map[KeyType]ValueType, capacity)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;分配和初始化哈希表结构。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;通道&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;code&gt;make(chan Type, capacity)&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;创建通道并设置其缓冲大小。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;22-发送数据&#34;&gt;2.2 发送数据&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;使用箭头操作符 &amp;lt;- 将数据发送到 Channel。&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
