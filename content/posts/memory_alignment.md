@@ -1,6 +1,6 @@
 ---
 title: "内存对齐（memory alignment）"
-date: 2025-10-14
+date: 2025-09-05
 categories: ["内存"]
 tags: ["memory"]
 draft: false

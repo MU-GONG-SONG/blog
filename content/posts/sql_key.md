@@ -1,6 +1,6 @@
 ---
 title: "主键和唯一键？区别是什么？"
-date: 2025-10-14
+date: 2025-09-04
 categories: ["数据库"]
 tags: ["Assertion"]
 draft: false
