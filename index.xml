@@ -687,7 +687,7 @@ Runtime 起始时会启动一些 G：垃圾回收的 G，执行调度的 G，运
       <link>https://blog.q-song.top/posts/my_project01/</link>
       <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
       <guid>https://blog.q-song.top/posts/my_project01/</guid>
-      <description>&lt;p&gt;我是测试的&lt;/p&gt;
+      <description>&lt;p&gt;我是测试的.21.54&lt;/p&gt;
 &lt;h3&gt;&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;电商购物平台 &amp;amp; 管理后台（Go + Iris + MySQL + Redis + RabbitMQ + Nginx）&lt;/p&gt;
