@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://mugong-song.github.io/blog/sitemap.xml
+Sitemap: https://blog.q-song.top/sitemap.xml
