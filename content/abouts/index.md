@@ -53,7 +53,7 @@ layout: "page"
 ##  联系我
 
 - 📧 邮箱：tomsfamily01@gmail.com
-- 🐙 GitHub：[qsong](https://github.com/mugong-song)
+- 🐙 GitHub：[mugong-song](https://github.com/mugong-song)
 
 ---
 
