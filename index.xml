@@ -6,8 +6,109 @@
     <description>Recent content on Q-song | 技术.生活.阅读.思考</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 14 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://blog.q-song.top/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go 中的 Lock使用?</title>
+      <link>https://blog.q-song.top/posts/lock_differ/</link>
+      <pubDate>Tue, 09 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.q-song.top/posts/lock_differ/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;锁（Lock）是并发编程中用于保护共享资源、防止数据竞争（data race）的关键同步原语。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;1syncmutex-互斥锁&#34;&gt;1.sync.Mutex (互斥锁)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;同一时间只允许一个 goroutine 持有锁。
+不可重入（reentrant）：同一个 goroutine 再次调用 Lock() 会导致死锁。
+
+var mu sync.Mutex
+var count int
+func increment() {
+    mu.Lock()
+    defer mu.Unlock()
+    count++
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;注意&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;必须配对使用：每个 Lock() 必须对应一个 Unlock()。
+避免在持有锁时进行阻塞操作（如 I/O、channel 发送/接收），否则会降低并发性能。
+不要复制已使用的 Mutex（因为其内部状态不可复制）。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2syncrwmutex-读写锁&#34;&gt;2.sync.RWMutex 读写锁&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;支持 多个 reader 或 一个 writer。
+读锁（RLock）：允许多个 goroutine 同时读。
+写锁（Lock）：独占，阻塞所有读和其他写。
+适用于“读多写少”的场景。
+
+var rwmu sync.RWMutex
+var cache map[string]string
+// 读操作
+func get(key string) string {
+    rwmu.RLock()
+    defer rwmu.RUnlock()
+    return cache[key]
+}
+// 写操作
+func set(key, value string) {
+    rwmu.Lock()
+    defer rwmu.Unlock()
+    cache[key] = value
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;注意&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;写锁优先级问题：某些实现中，持续的读请求可能“饿死”写请求（Go 的 RWMutex 在写等待时会阻止新读者进入，缓解此问题）。
+不要在读锁内修改共享数据！仅用于读取。
+和 Mutex 一样，不可重入、不可复制。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;3syncmap-并发安全的map&#34;&gt;3.sync.Map 并发安全的map&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;内置并发安全的 map，内部使用分段锁或原子操作优化。
+适用于读远多于写、key 集合不固定（频繁增删）的场景。
+不是通用替代品，仅在特定场景比 map + RWMutex 更高效。
+
+var m sync.Map
+
+m.Store(&amp;#34;key&amp;#34;, &amp;#34;value&amp;#34;)
+if v, ok := m.Load(&amp;#34;key&amp;#34;); ok {
+    fmt.Println(v)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;注意&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;接口类型：key 和 value 都是 interface{}，有类型转换开销。
+不支持遍历快照：Range 回调期间 map 可能被修改。
+不适合复杂操作（如“读-改-写”原子操作），此时仍需配合锁。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;4原子操作syncatomic-无锁&#34;&gt;4.原子操作（sync/atomic）—— 无锁&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;对简单类型（int32/int64/pointer 等）提供原子读写、CAS（Compare-And-Swap）。
+性能极高，无 goroutine 阻塞。
+适用于计数器、标志位等简单状态。
+
+var counter int64
+// 原子自增
+atomic.AddInt64(&amp;amp;counter, 1)
+// 原子加载
+val := atomic.LoadInt64(&amp;amp;counter)
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;注意&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;仅适用于对齐的、简单内存操作。
+不能用于保护复杂数据结构（如 slice、struct 字段组合）。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;5使用注意&#34;&gt;5.使用注意&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;锁粒度控制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;尽量缩小临界区，只保护真正需要同步的代码。&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Kafka的rebalance?什么情况下会出现?</title>
       <link>https://blog.q-song.top/posts/kafka_rebalance/</link>
