@@ -110,6 +110,30 @@ val := atomic.LoadInt64(&amp;amp;counter)
 &lt;p&gt;&lt;code&gt;尽量缩小临界区，只保护真正需要同步的代码。&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Restful API设计最佳实践?</title>
+      <link>https://blog.q-song.top/posts/restful_api_images/</link>
+      <pubDate>Tue, 09 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://blog.q-song.top/posts/restful_api_images/</guid>
+      <description>&lt;h3 id=&#34;rest-api&#34;&gt;REST API？&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REST API 是当今最常见的 Web 接口形式之一 ，在确保客户端和服务器之间的顺利通信方面发挥了重要作用。
+你可以把客户端看作前端，把服务器看作后端。
+客户端（前端）和服务器（后端）之间的通信通常不是直接的。因此，我们使用 API（应用编程接口），作为客户端和服务器之间的中介。
+因为 API 在这种 client–server 通信中起着至关重要的作用，所以我们在设计 API 时应该遵循最佳实践。这有助于开发人员更好地维护和使用它们。
+本文讲解创建 REST API 时可以遵循的一些最佳实践。这将帮助创建高效，安全，易于使用和维护的 API。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;1什么是-rest-api&#34;&gt;1.什么是 REST API？&lt;/h3&gt;
+&lt;p&gt;REST 是 Representational State Transfer 的缩写。它是由 Roy Fielding 博士在 2000 年他的博士论文中提出一种软件架构风格，用于指导网络应用的设计和开发，使得 Web API（网络应用编程接口）更加简单、灵活、可扩展和易于理解。
+任何遵循 REST 设计原则的 API 都被称为 RESTful API。
+简单地说，REST API 是两台计算机通过 HTTP（超文本传输协议）进行通信的媒介，与客户端和服务器的通信方式相同。
+REST API 使用 URL 唯一标识和定位 RESTful 服务中的资源，一个完整的 URL 结构如下：
+&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.q-song.top/posts/restful_api_images/0699d80f.png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2rest-api-设计建议&#34;&gt;2.REST API 设计建议&lt;/h3&gt;
+&lt;h4 id=&#34;1-用名词表示资源&#34;&gt;1. 用名词表示资源&lt;/h4&gt;
+&lt;p&gt;当你设计一个 REST API 时，端点应该使用名词而非动词。
+这是因为 HTTP 方法已经以动词形式执行基本的 CRUD（创建、读取、更新、删除）操作。
+GET、POST、PUT、PATCH 和 DELETE 是最常见的 HTTP 动词。还有其他非 HTTP 标准动词，如 COPY、PURGE、LINK、UNLINK 等等。
+因此，举例来说，一个端点不应该是这样的：&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Kafka的rebalance?什么情况下会出现?</title>
       <link>https://blog.q-song.top/posts/kafka_rebalance/</link>
       <pubDate>Tue, 14 Oct 2025 00:00:00 +0000</pubDate>
