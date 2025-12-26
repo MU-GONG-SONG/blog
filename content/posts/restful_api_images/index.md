@@ -1,6 +1,6 @@
 ---
 title: "Restful API设计最佳实践?"
-date: 2025-12-09
+date: 2025-12-10
 categories: ["restful"]
 tags: ["restful"]
 draft: false
